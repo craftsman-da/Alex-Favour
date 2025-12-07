@@ -1,3 +1,20 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+:root {
+	--theme-primary: #facc15;
+}
+
+/* Dynamic theme sections */
+.theme-section-bg {
+	background: linear-gradient(135deg, rgba(var(--theme-r, 250), var(--theme-g, 204), var(--theme-b, 21), 0.1) 0%, rgba(var(--theme-r, 250), var(--theme-g, 204), var(--theme-b, 21), 0.05) 100%);
+	transition: background 0.3s ease;
+}
+
+/* For the rose-100 sections, we'll create a lighter version of the theme color */
+.theme-section-light {
+	background: linear-gradient(135deg, rgba(var(--theme-r, 250), var(--theme-g, 204), var(--theme-b, 21), 0.15) 0%, rgba(var(--theme-r, 250), var(--theme-g, 204), var(--theme-b, 21), 0.08) 100%);
+	transition: background 0.3s ease;
+}
