@@ -16,8 +16,6 @@ function AppContent() {
               <a href="/" className="hover:text-gray-900 transition-colors">Home</a>
               <a href="#story" className="hover:text-gray-900 transition-colors">Our Story</a>
               <a href="/program-of-event" className="hover:text-gray-900 transition-colors">Program of Event</a>
-              <a href="#travel" className="hover:text-gray-900 transition-colors">Travel</a>
-              <a href="#registry" className="hover:text-gray-900 transition-colors">Registry</a>
             </div>
           </div>
         </nav>
@@ -72,9 +70,12 @@ function AppContent() {
               <p className="text-gray-600 leading-relaxed mb-8">
                 It's a love-at-first-swipe, corner-to-corner eye contact thing. We've through the most powerful moments and funny bad fortune to arrive at forever grateful moment.
               </p>
-              <button className="text-sm font-medium text-[var(--theme-primary)] hover:text-gray-800 transition-colors">
+              <a 
+                href="/gift-registry"
+                className="inline-block bg-[var(--theme-primary)] text-white px-10 py-4 rounded-full text-base font-bold shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all duration-300 border-2 border-[var(--theme-primary)] hover:bg-white hover:text-[var(--theme-primary)]"
+              >
                 GIFT NOW →
-              </button>
+              </a>
             </div>
 
             <div className="bg-gray-50 rounded-3xl p-12">

@@ -45,6 +45,12 @@ export function CeremonyCards() {
     setThemeColor(COLORS[selected].value, COLORS[selected].rgb);
   }, [selected]);
 
+  const TRAD_COLORS = [
+    { name: 'Navy Blue', bg: 'bg-blue-900', border: 'border-blue-900' },
+    { name: 'Oxblood', bg: 'bg-[#4a0404]', border: 'border-[#4a0404]' },
+    { name: 'Golden Yellow', bg: 'bg-yellow-500', border: 'border-yellow-500' },
+  ];
+
   return (
     <div className="mt-12 flex flex-col gap-32"> 
       {/* Traditional Marriage - image left, text right */}
@@ -70,10 +76,27 @@ export function CeremonyCards() {
           </h3>
           <p className="text-gray-600 text-lg mb-6 max-w-xl">Explore family backgrounds, parents, towns, villages, and ceremony location. Get turn-by-turn navigation to the venue.</p>
           
-          {/* ...existing code... */}
+          <div className="mb-8 w-full max-w-xl">
+            <h4 className="text-sm font-semibold text-gray-700 mb-3 uppercase tracking-wider">Colour of the Day</h4>
+            <div className="flex gap-3">
+              {TRAD_COLORS.map((color) => (
+                <div
+                  key={color.name}
+                  className={`w-10 h-10 rounded-2xl border-2 shadow-sm flex items-center justify-center ${color.bg} ${color.border}`}
+                  aria-label={color.name}
+                >
+                </div>
+              ))}
+            </div>
+            <div className="flex gap-3 mt-2">
+              {TRAD_COLORS.map((color) => (
+                <span key={color.name} className="text-xs text-gray-600 font-medium w-10 text-center">{color.name}</span>
+              ))}
+            </div>
+          </div>
           
           <a
-            href="/ceremony-details"
+            href="/ceremony-details/traditional"
             className="inline-block px-8 py-3 rounded-full text-base font-medium border border-gray-200 bg-[var(--theme-primary)/30] text-[var(--theme-primary)] hover:bg-[var(--theme-primary)] hover:text-white transition-colors shadow"
           >
             View details
@@ -132,7 +155,7 @@ export function CeremonyCards() {
             </div>
           </div>
           <a
-            href="#party"
+            href="/ceremony-details/wedding"
             className="inline-block px-8 py-3 rounded-full text-base font-medium border border-gray-200 bg-[var(--theme-primary)/30] text-[var(--theme-primary)] hover:bg-[var(--theme-primary)] hover:text-white transition-colors shadow"
           >
             View details

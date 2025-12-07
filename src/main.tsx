@@ -4,6 +4,8 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { ThemeProvider } from './context/ThemeContext';
 import App from './App.tsx';
 import { ProgramOfEvent } from './pages/ProgramOfEvent.tsx';
+import { CeremonyDetails } from './CeremonyDetails.tsx';
+import { GiftRegistry } from './pages/GiftRegistry.tsx';
 import './index.css';
 
 createRoot(document.getElementById('root')!).render(
@@ -13,6 +15,8 @@ createRoot(document.getElementById('root')!).render(
         <Routes>
           <Route path="/" element={<App />} />
           <Route path="/program-of-event" element={<ProgramOfEvent />} />
+          <Route path="/ceremony-details/:type" element={<CeremonyDetails />} />
+          <Route path="/gift-registry" element={<GiftRegistry />} />
         </Routes>
       </Router>
     </ThemeProvider>
