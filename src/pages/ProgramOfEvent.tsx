@@ -20,10 +20,11 @@ export function ProgramOfEvent() {
     const doc = new jsPDF();
     const pageWidth = doc.internal.pageSize.width;
     const pageHeight = doc.internal.pageSize.height;
+    const pdfThemeColor = '#059669'; // Emerald Green
 
     // Helper function to add decorative border
     const addBorder = () => {
-      doc.setDrawColor(selectedColor.value);
+      doc.setDrawColor(pdfThemeColor);
       doc.setLineWidth(0.5);
       doc.rect(5, 5, pageWidth - 10, pageHeight - 10); // Outer border
       doc.setLineWidth(0.2);
@@ -37,7 +38,7 @@ export function ProgramOfEvent() {
       // Wedding Couple Names
       doc.setFont('times', 'italic');
       doc.setFontSize(24);
-      doc.setTextColor(selectedColor.value);
+      doc.setTextColor(pdfThemeColor);
       doc.text('Ifesinachi & Chioma', pageWidth / 2, 25, { align: 'center' });
 
       // Date
@@ -81,7 +82,7 @@ export function ProgramOfEvent() {
         overflow: 'linebreak'
       },
       columnStyles: {
-        0: { cellWidth: 30, fontStyle: 'bold', textColor: selectedColor.value }, // Time
+        0: { cellWidth: 30, fontStyle: 'bold', textColor: pdfThemeColor }, // Time
         1: { cellWidth: 50, fontStyle: 'bold', textColor: [60, 60, 60] }, // Event Title
         2: { cellWidth: 'auto', fontStyle: 'italic', textColor: [100, 100, 100] } // Description
       },
@@ -112,7 +113,7 @@ export function ProgramOfEvent() {
         overflow: 'linebreak'
       },
       columnStyles: {
-        0: { cellWidth: 30, fontStyle: 'bold', textColor: selectedColor.value },
+        0: { cellWidth: 30, fontStyle: 'bold', textColor: pdfThemeColor },
         1: { cellWidth: 50, fontStyle: 'bold', textColor: [60, 60, 60] },
         2: { cellWidth: 'auto', fontStyle: 'italic', textColor: [100, 100, 100] }
       },
