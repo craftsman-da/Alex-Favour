@@ -6,6 +6,7 @@ import App from './App.tsx';
 import { ProgramOfEvent } from './pages/ProgramOfEvent.tsx';
 import { CeremonyDetails } from './CeremonyDetails.tsx';
 import { GiftRegistry } from './pages/GiftRegistry.tsx';
+import { Gallery } from './pages/Gallery.tsx';
 import './index.css';
 
 createRoot(document.getElementById('root')!).render(
@@ -17,6 +18,7 @@ createRoot(document.getElementById('root')!).render(
           <Route path="/program-of-event" element={<ProgramOfEvent />} />
           <Route path="/ceremony-details/:type" element={<CeremonyDetails />} />
           <Route path="/gift-registry" element={<GiftRegistry />} />
+          <Route path="/gallery" element={<Gallery />} />
         </Routes>
       </Router>
     </ThemeProvider>

@@ -1,6 +1,8 @@
 import { Heart, MapPin, Calendar, Users } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import { CeremonyCards } from './components/CeremonyCards';
 import { Countdown } from './components/Countdown';
+import { Parallax } from './components/Parallax';
 
 function AppContent() {
   return (
@@ -13,7 +15,7 @@ function AppContent() {
               <span className="font-serif text-xl">Ifesinachi & Chioma</span>
             </div>
             <div className="hidden md:flex gap-8 text-sm text-gray-600">
-              <a href="/" className="hover:text-gray-900 transition-colors">Home</a>
+              <Link to="/" className="hover:text-gray-900 transition-colors">Home</Link>
               <a href="#story" className="hover:text-gray-900 transition-colors">Our Story</a>
               <a href="/program-of-event" className="hover:text-gray-900 transition-colors">Program of Event</a>
             </div>
@@ -23,13 +25,15 @@ function AppContent() {
         <section id="home" className="pt-20 px-6">
           <div className="max-w-7xl mx-auto">
             <div className="relative h-[600px] rounded-3xl overflow-hidden">
-              <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black/30"></div>
-              <img
-                src="https://images.pexels.com/photos/1444442/pexels-photo-1444442.jpeg?auto=compress&cs=tinysrgb&w=1200"
-                alt="Wedding couple"
-                className="w-full h-full object-cover"
-              />
-              <div className="absolute inset-0 flex flex-col items-center justify-center gap-8">
+              <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black/30 z-10"></div>
+              <Parallax speed={-30} className="absolute inset-0 w-full h-[120%] -top-[10%]">
+                <img
+                  src="https://images.pexels.com/photos/1444442/pexels-photo-1444442.jpeg?auto=compress&cs=tinysrgb&w=1200"
+                  alt="Wedding couple"
+                  className="w-full h-full object-cover"
+                />
+              </Parallax>
+              <div className="absolute inset-0 flex flex-col items-center justify-center gap-8 z-20">
                 <h1 className="text-white text-5xl md:text-6xl font-serif tracking-wider">
                   JOIN US TO CELEBRATE
                 </h1>
@@ -42,19 +46,21 @@ function AppContent() {
         <section className="py-20 px-6">
           <div className="max-w-7xl mx-auto">
             <div className="flex flex-col md:flex-row items-center gap-12 bg-gray-50 rounded-3xl p-12">
-              <div className="w-32 h-32 rounded-2xl overflow-hidden shadow-lg flex-shrink-0">
-                <img
-                  src="https://images.pexels.com/photos/265722/pexels-photo-265722.jpeg?auto=compress&cs=tinysrgb&w=400"
-                  alt="Wedding rings"
-                  className="w-full h-full object-cover"
-                />
+              <div className="w-32 h-32 rounded-2xl overflow-hidden shadow-lg flex-shrink-0 relative">
+                <Parallax speed={-10} className="absolute inset-0 w-full h-[140%] -top-[20%]">
+                  <img
+                    src="https://images.pexels.com/photos/265722/pexels-photo-265722.jpeg?auto=compress&cs=tinysrgb&w=400"
+                    alt="Wedding rings"
+                    className="w-full h-full object-cover"
+                  />
+                </Parallax>
               </div>
               <div className="flex-1 text-center md:text-left">
                 <p className="text-sm text-gray-500 uppercase tracking-wider mb-2">Join us to celebrate</p>
                 <h2 className="text-4xl md:text-5xl font-serif text-gray-800 mb-4">
                   Ifesinachi & Chioma
                 </h2>
-                <p className="text-gray-600 mb-6">2nd Jan 2026 &amp; 17th Jan 2026</p>
+                <p className="text-gray-600 mb-6">17th Jan 2026</p>
               </div>
               <button className="bg-[var(--theme-primary)] text-white px-8 py-3 rounded-full text-sm font-medium border border-[var(--theme-primary)] hover:bg-white hover:text-[var(--theme-primary)] transition-colors">
                 RSVP NOW
@@ -78,33 +84,38 @@ function AppContent() {
               </a>
             </div>
 
-            <div className="bg-gray-50 rounded-3xl p-12">
-              <h3 className="text-2xl font-serif text-gray-800 mb-6">Photo Gallery</h3>
-              <p className="text-sm text-gray-600 mb-6">Relive the Memorable<br />Your Moments</p>
+            <Link to="/gallery" className="bg-gray-50 rounded-3xl p-12 block hover:shadow-lg transition-all duration-300 cursor-pointer group">
+              <div className="flex justify-between items-start mb-6">
+                <div>
+                  <h3 className="text-2xl font-serif text-gray-800 mb-2">Photo Gallery</h3>
+                  <p className="text-sm text-gray-600">Relive the Memorable<br />Your Moments</p>
+                </div>
+                <span className="text-[var(--theme-primary)] opacity-0 group-hover:opacity-100 transition-opacity font-medium">View All →</span>
+              </div>
               <div className="grid grid-cols-3 gap-3">
                 <div className="aspect-square rounded-lg overflow-hidden">
                   <img
                     src="https://images.pexels.com/photos/1043902/pexels-photo-1043902.jpeg?auto=compress&cs=tinysrgb&w=300"
                     alt="Gallery 1"
-                    className="w-full h-full object-cover hover:scale-110 transition-transform duration-300"
+                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                   />
                 </div>
                 <div className="aspect-square rounded-lg overflow-hidden">
                   <img
                     src="https://images.pexels.com/photos/1024993/pexels-photo-1024993.jpeg?auto=compress&cs=tinysrgb&w=300"
                     alt="Gallery 2"
-                    className="w-full h-full object-cover hover:scale-110 transition-transform duration-300"
+                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500 delay-75"
                   />
                 </div>
                 <div className="aspect-square rounded-lg overflow-hidden">
                   <img
                     src="https://images.pexels.com/photos/1616113/pexels-photo-1616113.jpeg?auto=compress&cs=tinysrgb&w=300"
                     alt="Gallery 3"
-                    className="w-full h-full object-cover hover:scale-110 transition-transform duration-300"
+                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500 delay-150"
                   />
                 </div>
               </div>
-            </div>
+            </Link>
           </div>
         </section>
 
@@ -157,6 +168,55 @@ function AppContent() {
                   <iframe
                     src="https://www.google.com/maps?q=Kingdom+of+Mercy+Ministries,+Lagos,+Nigeria&output=embed"
                     title="Church Location"
+                    width="100%"
+                    height="400"
+                    style={{ border: 0 }}
+                    allowFullScreen={true}
+                    loading="lazy"
+                    referrerPolicy="no-referrer-when-downgrade"
+                  ></iframe>
+                </div>
+              </div>
+            </div>
+
+            <div className="grid md:grid-cols-2 gap-12 items-start mt-20">
+              <div className="md:order-2">
+                <div className="flex items-center gap-2 mb-4">
+                  <Users className="w-5 h-5 text-gray-600" />
+                  <p className="text-sm text-gray-600 uppercase tracking-wider">CELEBRATION</p>
+                </div>
+                <h2 className="text-4xl font-serif text-gray-800 mb-8">
+                  Grand Reception
+                </h2>
+                <div className="space-y-4 text-gray-600 mb-8">
+                  <div className="flex items-start gap-3">
+                    <MapPin className="w-5 h-5 mt-1 flex-shrink-0" />
+                    <div>
+                      <p className="font-medium text-gray-800">Location</p>
+                      <p className="text-sm">19a, Mobolaji Bank Anthony Way, Maryland</p>
+                    </div>
+                  </div>
+                  <div className="flex items-start gap-3">
+                    <Calendar className="w-5 h-5 mt-1 flex-shrink-0" />
+                    <div>
+                      <p className="font-medium text-gray-800">Date</p>
+                      <p className="text-sm">17th January 2026</p>
+                    </div>
+                  </div>
+                  <div className="flex items-start gap-3">
+                    <Heart className="w-5 h-5 mt-1 flex-shrink-0" />
+                    <div>
+                      <p className="font-medium text-gray-800">Time</p>
+                      <p className="text-sm">1:00 PM</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="relative md:order-1">
+                <div className="rounded-3xl overflow-hidden shadow-2xl">
+                  <iframe
+                    src="https://www.google.com/maps?q=19a+Mobolaji+Bank+Anthony+Way,+Maryland,+Lagos,+Nigeria&output=embed"
+                    title="Reception Location"
                     width="100%"
                     height="400"
                     style={{ border: 0 }}
@@ -224,10 +284,6 @@ function AppContent() {
         <footer className="theme-section-light px-6 py-12">
           <div className="max-w-7xl mx-auto text-center">
             <div className="flex justify-center gap-8 text-sm text-gray-600 mb-8">
-              <a href="#" className="hover:text-gray-900 transition-colors">CONFERENCES</a>
-              <a href="#" className="hover:text-gray-900 transition-colors">WEDDINGS / GARDEN</a>
-              <a href="#" className="hover:text-gray-900 transition-colors">@Lauren Booth</a>
-              <a href="#" className="hover:text-gray-900 transition-colors">Discord</a>
               <a href="#" className="hover:text-gray-900 transition-colors">Follow</a>
             </div>
             <div className="flex justify-center gap-4">

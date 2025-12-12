@@ -1,5 +1,7 @@
-import { Heart, Clock, MapPin } from 'lucide-react';
+import { Heart, Clock, MapPin, Download } from 'lucide-react';
 import { useState } from 'react';
+import jsPDF from 'jspdf';
+import autoTable from 'jspdf-autotable';
 import { useTheme } from '../context/ThemeContext.tsx';
 import { COLORS } from '../components/CeremonyCards.tsx';
 import { programData } from '../data/programData';
@@ -13,6 +15,117 @@ export function ProgramOfEvent() {
   const currentTabData = programData[tabNames[activeTab]];
   const currentEvents = currentTabData.events;
   const currentVenue = currentTabData.venue;
+
+  const handleDownloadPDF = () => {
+    const doc = new jsPDF();
+    const pageWidth = doc.internal.pageSize.width;
+    const pageHeight = doc.internal.pageSize.height;
+
+    // Helper function to add decorative border
+    const addBorder = () => {
+      doc.setDrawColor(selectedColor.value);
+      doc.setLineWidth(0.5);
+      doc.rect(5, 5, pageWidth - 10, pageHeight - 10); // Outer border
+      doc.setLineWidth(0.2);
+      doc.rect(7, 7, pageWidth - 14, pageHeight - 14); // Inner border
+    };
+
+    // Helper function to add header
+    const addHeader = (title: string, venue: string) => {
+      addBorder();
+      
+      // Wedding Couple Names
+      doc.setFont('times', 'italic');
+      doc.setFontSize(24);
+      doc.setTextColor(selectedColor.value);
+      doc.text('Ifesinachi & Chioma', pageWidth / 2, 25, { align: 'center' });
+
+      // Date
+      doc.setFont('times', 'normal');
+      doc.setFontSize(12);
+      doc.setTextColor(100, 100, 100);
+      doc.text('Saturday, 17th January 2026', pageWidth / 2, 33, { align: 'center' });
+
+      // Divider
+      doc.setDrawColor(200, 200, 200);
+      doc.line(pageWidth / 2 - 20, 38, pageWidth / 2 + 20, 38);
+
+      // Section Title
+      doc.setFont('times', 'bold');
+      doc.setFontSize(18);
+      doc.setTextColor(60, 60, 60);
+      doc.text(title.toUpperCase(), pageWidth / 2, 50, { align: 'center' });
+
+      // Venue
+      doc.setFont('times', 'italic');
+      doc.setFontSize(10);
+      doc.setTextColor(120, 120, 120);
+      doc.text(venue, pageWidth / 2, 58, { align: 'center', maxWidth: 160 });
+    };
+
+    // Page 1: Church Service
+    const churchData = programData['The Church Service'];
+    addHeader('The Church Service', churchData.venue);
+
+    // Elegant Table
+    autoTable(doc, {
+      startY: 70,
+      head: [], // No header for cleaner look
+      body: churchData.events.map(e => [e.time, e.title, e.description]),
+      theme: 'plain',
+      styles: { 
+        font: 'times',
+        fontSize: 11,
+        cellPadding: 4,
+        valign: 'top',
+        overflow: 'linebreak'
+      },
+      columnStyles: {
+        0: { cellWidth: 30, fontStyle: 'bold', textColor: selectedColor.value }, // Time
+        1: { cellWidth: 50, fontStyle: 'bold', textColor: [60, 60, 60] }, // Event Title
+        2: { cellWidth: 'auto', fontStyle: 'italic', textColor: [100, 100, 100] } // Description
+      },
+      didDrawCell: (data) => {
+        // Add a subtle bottom border to each row for separation
+        if (data.section === 'body' && data.column.index === 2) {
+          doc.setDrawColor(240, 240, 240);
+          doc.line(data.cell.x, data.cell.y + data.cell.height, data.cell.x + data.cell.width, data.cell.y + data.cell.height);
+        }
+      }
+    });
+
+    // Page 2: Reception
+    doc.addPage();
+    const receptionData = programData['The Grand Reception'];
+    addHeader('The Grand Reception', receptionData.venue);
+
+    autoTable(doc, {
+      startY: 70,
+      head: [],
+      body: receptionData.events.map(e => [e.time, e.title, e.description]),
+      theme: 'plain',
+      styles: { 
+        font: 'times',
+        fontSize: 11,
+        cellPadding: 4,
+        valign: 'top',
+        overflow: 'linebreak'
+      },
+      columnStyles: {
+        0: { cellWidth: 30, fontStyle: 'bold', textColor: selectedColor.value },
+        1: { cellWidth: 50, fontStyle: 'bold', textColor: [60, 60, 60] },
+        2: { cellWidth: 'auto', fontStyle: 'italic', textColor: [100, 100, 100] }
+      },
+      didDrawCell: (data) => {
+        if (data.section === 'body' && data.column.index === 2) {
+          doc.setDrawColor(240, 240, 240);
+          doc.line(data.cell.x, data.cell.y + data.cell.height, data.cell.x + data.cell.width, data.cell.y + data.cell.height);
+        }
+      }
+    });
+
+    doc.save('Ifesinachi_Chioma_Program.pdf');
+  };
 
   return (
     <>
@@ -39,8 +152,19 @@ export function ProgramOfEvent() {
             <p className="text-lg text-gray-600 mb-8">
               Explore the detailed schedule for both the Church Service and Grand Reception!
             </p>
-            <div className="inline-block px-8 py-4 rounded-2xl" style={{ backgroundColor: `${selectedColor.value}20` }}>
+            <div className="inline-block px-8 py-4 rounded-2xl mb-8" style={{ backgroundColor: `${selectedColor.value}20` }}>
               <p className="text-gray-800 font-medium">17th January 2026 • Kingdom of Mercy Ministries & Reception Venue, Lagos</p>
+            </div>
+
+            <div>
+              <button
+                onClick={handleDownloadPDF}
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-full text-white font-medium shadow-lg hover:shadow-xl transition-all hover:-translate-y-1"
+                style={{ backgroundColor: selectedColor.value }}
+              >
+                <Download className="w-5 h-5" />
+                Download Program PDF
+              </button>
             </div>
           </div>
         </section>

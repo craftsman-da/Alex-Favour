@@ -1,7 +1,6 @@
 import { Heart, MapPin, Calendar, Navigation, Download } from 'lucide-react';
 import { useParams } from 'react-router-dom';
 import { useTheme } from './context/ThemeContext';
-import traditionalInvite from './assets/traditional-invite.jpg';
 import weddingInvite from './assets/wedding-invite.jpg';
 
 export function CeremonyDetails() {
@@ -9,9 +8,7 @@ export function CeremonyDetails() {
   const { selectedColorIndex } = useTheme();
   const themeColor = selectedColorIndex === 0 ? '#facc15' : selectedColorIndex === 1 ? '#059669' : '#1e3a8a';
 
-  const isWedding = type === 'wedding';
-  
-  const details = isWedding ? {
+  const details = {
     title: 'Wedding Ceremony',
     date: 'January 17th, 2026',
     time: '10:00 AM',
@@ -24,20 +21,6 @@ export function CeremonyDetails() {
       { name: 'Emerald', bg: 'bg-emerald-700' },
       { name: 'Gold', bg: 'bg-yellow-500' },
       { name: 'White', bg: 'bg-white border border-gray-200' }
-    ]
-  } : {
-    title: 'Traditional Marriage',
-    date: 'January 2nd, 2026',
-    time: '1:00 PM',
-    venue: 'Amaezekwe Community, Ebonyi State',
-    address: "Ngwuta Nwankwo's Compound, Amaezekwe Community, Ezza South L.G.A, Ebonyi State",
-    mapLink: "https://maps.google.com/?q=Ngwuta+Nwankwo's+Compound,+Amaezekwe+Community,+Ezza+South+L.G.A,+Ebonyi+State",
-    image: traditionalInvite,
-    filename: 'Ifesinachi_Chioma_Traditional_Invite.jpg',
-    colors: [
-      { name: 'Navy Blue', bg: 'bg-blue-900' },
-      { name: 'Oxblood', bg: 'bg-[#4a0404]' },
-      { name: 'Gold', bg: 'bg-yellow-500' }
     ]
   };
 

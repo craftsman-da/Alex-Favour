@@ -3,47 +3,47 @@ export const programData = {
     venue: 'Kingdom of Mercy Ministries, 5/7 Toyin Popoola Cres, Ikosi Ketu, Lagos 105102, Lagos, Nigeria',
     events: [
       {
-        time: '8:30 AM',
+        time: '10:00 AM',
         title: 'Prelude',
         description: 'Music played as guests are ushered to their seats.',
       },
       {
-        time: '9:00 AM',
+        time: '10:05 AM',
         title: 'Processional',
         description: 'The clergy, groom, and groomsmen enter, followed by the bridal party.',
       },
       {
-        time: '9:15 AM',
+        time: '10:10 AM',
         title: 'Bridal Entrance',
         description: 'The bride walks down the aisle, typically accompanied by her father.',
       },
       {
-        time: '9:30 AM',
+        time: '10:15 AM',
         title: 'Opening Prayers & Hymns',
         description: 'A prayer to open the service, followed by a congregational hymn and a Bible reading.',
       },
       {
-        time: '9:45 AM',
+        time: '10:25 AM',
         title: 'Sermon/Message',
         description: 'The clergy delivers a message on the sanctity of marriage.',
       },
       {
-        time: '10:00 AM',
+        time: '10:35 AM',
         title: 'The Vows & Rings',
         description: 'The couple exchanges their marriage vows and wedding bands.',
       },
       {
-        time: '10:15 AM',
+        time: '10:45 AM',
         title: 'Declaration & Blessing',
         description: 'The clergy pronounces the couple husband and wife and offers a final blessing.',
       },
       {
-        time: '10:25 AM',
+        time: '10:50 AM',
         title: 'Signing of the Register',
         description: 'The official legal documentation is signed.',
       },
       {
-        time: '10:45 AM',
+        time: '10:55 AM',
         title: 'Recessional',
         description: 'The newlyweds make their first exit together.',
       },
@@ -55,7 +55,7 @@ export const programData = {
     ],
   },
   'The Grand Reception': {
-    venue: '22 Salvation St, ERUNKAN, Lagos 105102, Lagos, Nigeria',
+    venue: '19a, Mobolaji Bank Anthony Way, Maryland',
     events: [
       {
         time: '1:00 PM',
