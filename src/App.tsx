@@ -62,9 +62,9 @@ function AppContent() {
                 </h2>
                 <p className="text-gray-600 mb-6">17th Jan 2026</p>
               </div>
-              <button className="bg-[var(--theme-primary)] text-white px-8 py-3 rounded-full text-sm font-medium border border-[var(--theme-primary)] hover:bg-white hover:text-[var(--theme-primary)] transition-colors">
-                RSVP NOW
-              </button>
+              <Link to="/program-of-event" className="bg-[var(--theme-primary)] text-white px-8 py-3 rounded-full text-sm font-medium border border-[var(--theme-primary)] hover:bg-white hover:text-[var(--theme-primary)] transition-colors">
+                Program of Event
+              </Link>
             </div>
           </div>
         </section>
