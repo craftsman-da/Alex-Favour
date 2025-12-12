@@ -120,6 +120,24 @@ export function CeremonyDetails() {
             </div>
           </div>
 
+          {/* Map Section */}
+          <div className="mt-12 bg-white rounded-3xl shadow-xl overflow-hidden border border-gray-100">
+            <div className="p-6 md:p-8">
+              <h3 className="font-serif text-2xl text-gray-900 mb-4">Venue Location</h3>
+              <p className="text-gray-600 mb-4">{details.address}</p>
+              <div className="w-full h-96 rounded-2xl overflow-hidden border border-gray-200">
+                <iframe
+                  width="100%"
+                  height="100%"
+                  frameBorder="0"
+                  src={`https://www.google.com/maps/embed/v1/place?key=AIzaSyDCNjxHUdLqTYXaVNxaLZaGPkGcqQ6Gxxs&q=${encodeURIComponent(details.address)}`}
+                  allowFullScreen
+                  loading="lazy"
+                ></iframe>
+              </div>
+            </div>
+          </div>
+
         </div>
       </main>
     </div>
