@@ -196,7 +196,7 @@ export function ProgramOfEvent() {
             <div className="relative">
               {/* Vertical line */}
               <div
-                className="absolute left-1/2 transform -translate-x-1/2 w-1 h-full rounded-full"
+                className="absolute left-4 md:left-1/2 transform md:-translate-x-1/2 w-1 h-full rounded-full"
                 style={{ backgroundColor: `${selectedColor.value}40` }}
               ></div>
 
@@ -205,10 +205,16 @@ export function ProgramOfEvent() {
                 {currentEvents.map((event, index) => (
                   <div
                     key={index}
-                    className={`flex ${index % 2 === 0 ? 'flex-row' : 'flex-row-reverse'} gap-8 items-center`}
+                    className={`flex flex-col md:flex-row ${index % 2 === 0 ? '' : 'md:flex-row-reverse'} gap-8 items-center relative`}
                   >
+                    {/* Mobile Dot */}
+                    <div 
+                      className="absolute left-4 w-4 h-4 rounded-full border-2 border-white shadow-sm md:hidden transform -translate-x-1/2 z-10"
+                      style={{ backgroundColor: selectedColor.value }}
+                    ></div>
+
                     {/* Content */}
-                    <div className="w-full md:w-[calc(50%-24px)] md:px-6">
+                    <div className="w-full md:w-[calc(50%-24px)] pl-12 md:px-6">
                       <div className="bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-shadow border border-gray-100">
                         <div className="flex items-start gap-4">
                           <div className="flex-1">
@@ -235,8 +241,8 @@ export function ProgramOfEvent() {
                       </div>
                     </div>
 
-                    {/* Mobile spacer */}
-                    <div className="hidden w-full md:w-[calc(50%-24px)]"></div>
+                    {/* Desktop spacer */}
+                    <div className="hidden md:block w-full md:w-[calc(50%-24px)]"></div>
                   </div>
                 ))}
               </div>
@@ -273,26 +279,6 @@ export function ProgramOfEvent() {
                 </p>
               </div>
             </div>
-          </div>
-        </section>
-
-        {/* CTA Section */}
-        <section className="py-16 px-6">
-          <div className="max-w-4xl mx-auto text-center">
-            <h2 className="text-3xl font-serif text-gray-900 mb-6">We Can't Wait to Celebrate with You!</h2>
-            <p className="text-lg text-gray-600 mb-8">
-              Please RSVP by 10th December 2025 to confirm your attendance
-            </p>
-            <button
-              className="px-8 py-3 rounded-full text-base font-medium text-white transition-colors"
-              style={{
-                backgroundColor: selectedColor.value,
-              }}
-              onMouseEnter={(e) => (e.currentTarget.style.opacity = '0.9')}
-              onMouseLeave={(e) => (e.currentTarget.style.opacity = '1')}
-            >
-              RSVP NOW
-            </button>
           </div>
         </section>
 
