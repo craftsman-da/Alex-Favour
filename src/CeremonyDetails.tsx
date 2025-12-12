@@ -103,20 +103,6 @@ export function CeremonyDetails() {
 
               {/* Divider */}
               <div className="h-px bg-gray-100 my-8"></div>
-
-              {/* Colors Section */}
-              <div className="flex flex-col items-center justify-center gap-4">
-                <span className="text-sm text-gray-500 uppercase tracking-wider">Colors of the Day</span>
-                <div className="flex gap-6">
-                  {details.colors.map((color, index) => (
-                    <div key={index} className="flex flex-col items-center gap-2">
-                      <div className={`w-12 h-12 rounded-full ${color.bg} shadow-sm ring-2 ring-offset-2 ring-gray-100`}></div>
-                      <span className="text-xs text-gray-600">{color.name}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
             </div>
           </div>
 
