@@ -1,10 +1,13 @@
-import { Heart, MapPin, Calendar, Users } from 'lucide-react';
+import { Heart, MapPin, Calendar, Users, Menu, X } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { useState } from 'react';
 import { CeremonyCards } from './components/CeremonyCards';
 import { Countdown } from './components/Countdown';
 import { Parallax } from './components/Parallax';
 
 function AppContent() {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
   return (
     <>
       <div className="min-h-screen bg-white">
@@ -14,12 +17,49 @@ function AppContent() {
               <Heart className="w-5 h-5 text-rose-300" />
               <span className="font-serif text-xl">Ifesinachi & Chioma</span>
             </div>
+            
+            {/* Desktop Navigation */}
             <div className="hidden md:flex gap-8 text-sm text-gray-600">
               <Link to="/" className="hover:text-gray-900 transition-colors">Home</Link>
               <a href="#story" className="hover:text-gray-900 transition-colors">Our Story</a>
               <a href="/program-of-event" className="hover:text-gray-900 transition-colors">Program of Event</a>
             </div>
+
+            {/* Mobile Menu Button */}
+            <button 
+              className="md:hidden p-2 text-gray-600"
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+            >
+              {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            </button>
           </div>
+
+          {/* Mobile Menu Dropdown */}
+          {isMenuOpen && (
+            <div className="md:hidden absolute top-full left-0 w-full bg-white border-b border-gray-100 py-4 px-6 flex flex-col gap-4 shadow-lg animate-in slide-in-from-top-5 duration-200">
+              <Link 
+                to="/" 
+                className="text-gray-600 hover:text-gray-900 py-2"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                Home
+              </Link>
+              <a 
+                href="#story" 
+                className="text-gray-600 hover:text-gray-900 py-2"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                Our Story
+              </a>
+              <a 
+                href="/program-of-event" 
+                className="text-gray-600 hover:text-gray-900 py-2"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                Program of Event
+              </a>
+            </div>
+          )}
         </nav>
 
         <section id="home" className="pt-20 px-6">
