@@ -12,11 +12,6 @@ const fadeInUp: Variants = {
   visible: { opacity: 1, y: 0, transition: { duration: 0.6 } },
 };
 
-const fadeIn: Variants = {
-  hidden: { opacity: 0 },
-  visible: { opacity: 1, transition: { duration: 0.8 } },
-};
-
 const scaleIn: Variants = {
   hidden: { opacity: 0, scale: 0.95 },
   visible: { opacity: 1, scale: 1, transition: { duration: 0.6 } },
@@ -24,19 +19,27 @@ const scaleIn: Variants = {
 
 const slideInLeft: Variants = {
   hidden: { opacity: 0, x: -50 },
-  visible: { opacity: 1, x: 0, transition: { duration: 0.6 } },
+  visible: {
+    opacity: 1,
+    x: 0,
+    transition: { duration: 0.6, ease: 'easeOut' },
+  },
 };
 
 const slideInRight: Variants = {
   hidden: { opacity: 0, x: 50 },
-  visible: { opacity: 1, x: 0, transition: { duration: 0.6 } },
+  visible: {
+    opacity: 1,
+    x: 0,
+    transition: { duration: 0.6, ease: 'easeOut' },
+  },
 };
 
 const staggerContainer: Variants = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
-    transition: { staggerChildren: 0.1, delayChildren: 0.2 },
+    transition: { staggerChildren: 0.15, delayChildren: 0.1 },
   },
 };
 
@@ -45,7 +48,17 @@ const timelineItem: Variants = {
   visible: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.5 },
+    transition: { duration: 0.5, ease: 'easeOut' },
+  },
+};
+
+// Mobile-specific slide variants
+const mobileSlideIn: Variants = {
+  hidden: { opacity: 0, x: -30 },
+  visible: {
+    opacity: 1,
+    x: 0,
+    transition: { duration: 0.5, ease: 'easeOut' },
   },
 };
 
@@ -226,7 +239,8 @@ export function ProgramOfEvent() {
       <section className='py-16 px-6 bg-gradient-to-b from-gray-50 to-white'>
         <motion.div
           initial='hidden'
-          animate='visible'
+          whileInView='visible'
+          viewport={{ once: true, margin: '-50px' }}
           variants={staggerContainer}
           className='max-w-4xl mx-auto text-center'
         >
@@ -272,7 +286,8 @@ export function ProgramOfEvent() {
           {/* Tab Buttons */}
           <motion.div
             initial='hidden'
-            animate='visible'
+            whileInView='visible'
+            viewport={{ once: true, margin: '-100px' }}
             variants={staggerContainer}
             className='flex flex-col sm:flex-row gap-4 mb-12 justify-center'
           >
@@ -303,8 +318,9 @@ export function ProgramOfEvent() {
             {/* Vertical line */}
             <motion.div
               initial={{ scaleY: 0 }}
-              animate={{ scaleY: 1 }}
-              transition={{ duration: 1, delay: 0.3 }}
+              whileInView={{ scaleY: 1 }}
+              viewport={{ once: true, margin: '-100px' }}
+              transition={{ duration: 1, delay: 0.2 }}
               className='absolute left-4 md:left-1/2 transform md:-translate-x-1/2 w-1 h-full rounded-full origin-top'
               style={{ backgroundColor: `${currentColor.value}40` }}
             ></motion.div>
@@ -320,6 +336,9 @@ export function ProgramOfEvent() {
               {currentEvents.map((event, index) => (
                 <motion.div
                   key={index}
+                  initial='hidden'
+                  whileInView='visible'
+                  viewport={{ once: true, margin: '-50px', amount: 0.3 }}
                   variants={timelineItem}
                   className={`flex flex-col md:flex-row ${
                     index % 2 === 0 ? '' : 'md:flex-row-reverse'
@@ -328,14 +347,25 @@ export function ProgramOfEvent() {
                   {/* Mobile Dot */}
                   <motion.div
                     initial={{ scale: 0 }}
-                    animate={{ scale: 1 }}
-                    transition={{ delay: 0.2 + index * 0.1 }}
+                    whileInView={{ scale: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: 0.1, duration: 0.3 }}
                     className={`absolute left-4 w-4 h-4 rounded-full border-2 border-white shadow-sm md:hidden transform -translate-x-1/2 z-10 ${currentColor.bg}`}
                   ></motion.div>
 
                   {/* Content */}
                   <motion.div
-                    variants={index % 2 === 0 ? slideInLeft : slideInRight}
+                    initial='hidden'
+                    whileInView='visible'
+                    viewport={{ once: true, margin: '-50px', amount: 0.5 }}
+                    variants={{
+                      hidden: { opacity: 0, x: index % 2 === 0 ? -40 : 40 },
+                      visible: {
+                        opacity: 1,
+                        x: 0,
+                        transition: { duration: 0.6, ease: 'easeOut' },
+                      },
+                    }}
                     className='w-full md:w-[calc(50%-24px)] pl-12 md:px-6'
                   >
                     <motion.div
@@ -348,7 +378,13 @@ export function ProgramOfEvent() {
                     >
                       <div className='flex items-start gap-4'>
                         <div className='flex-1'>
-                          <div className='flex items-center gap-2 mb-2'>
+                          <motion.div
+                            initial={{ opacity: 0 }}
+                            whileInView={{ opacity: 1 }}
+                            viewport={{ once: true }}
+                            transition={{ delay: 0.2 }}
+                            className='flex items-center gap-2 mb-2'
+                          >
                             <Clock className='w-4 h-4 text-gray-500' />
                             <p
                               className='font-semibold text-sm'
@@ -356,23 +392,36 @@ export function ProgramOfEvent() {
                             >
                               {event.time}
                             </p>
-                          </div>
-                          <h3 className='text-xl font-serif text-gray-900 mb-2'>
+                          </motion.div>
+                          <motion.h3
+                            initial={{ opacity: 0, y: 10 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ delay: 0.3 }}
+                            className='text-xl font-serif text-gray-900 mb-2'
+                          >
                             {event.title}
-                          </h3>
-                          <p className='text-gray-600 text-sm'>
+                          </motion.h3>
+                          <motion.p
+                            initial={{ opacity: 0 }}
+                            whileInView={{ opacity: 1 }}
+                            viewport={{ once: true }}
+                            transition={{ delay: 0.4 }}
+                            className='text-gray-600 text-sm'
+                          >
                             {event.description}
-                          </p>
+                          </motion.p>
                         </div>
                       </div>
                     </motion.div>
                   </motion.div>
 
-                  {/* Timeline Dot */}
+                  {/* Timeline Dot - Desktop */}
                   <motion.div
                     initial={{ scale: 0 }}
-                    animate={{ scale: 1 }}
-                    transition={{ delay: 0.3 + index * 0.1 }}
+                    whileInView={{ scale: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: 0.2, duration: 0.4 }}
                     className='hidden md:flex items-center justify-center w-16 h-16 relative z-10'
                   >
                     <motion.div
