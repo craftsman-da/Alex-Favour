@@ -1,20 +1,40 @@
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-:root {
-	--theme-primary: #facc15;
+@layer base {
+  :root {
+    --theme-primary: #059669;
+    --theme-r: 5;
+    --theme-g: 150;
+    --theme-b: 105;
+  }
 }
 
-/* Dynamic theme sections */
-.theme-section-bg {
-	background: linear-gradient(135deg, rgba(var(--theme-r, 250), var(--theme-g, 204), var(--theme-b, 21), 0.1) 0%, rgba(var(--theme-r, 250), var(--theme-g, 204), var(--theme-b, 21), 0.05) 100%);
-	transition: background 0.3s ease;
-}
+@layer components {
+  /* Dynamic ring colors */
+  .ring-1,
+  .ring-2 {
+    --tw-ring-color: rgba(var(--theme-r), var(--theme-g), var(--theme-b), 0.2);
+  }
 
-/* For the rose-100 sections, we'll create a lighter version of the theme color */
-.theme-section-light {
-	background: linear-gradient(135deg, rgba(var(--theme-r, 250), var(--theme-g, 204), var(--theme-b, 21), 0.15) 0%, rgba(var(--theme-r, 250), var(--theme-g, 204), var(--theme-b, 21), 0.08) 100%);
-	transition: background 0.3s ease;
+  /* Dynamic theme sections */
+  .theme-section-bg {
+    background: linear-gradient(
+      135deg,
+      rgba(var(--theme-r), var(--theme-g), var(--theme-b), 0.1) 0%,
+      rgba(var(--theme-r), var(--theme-g), var(--theme-b), 0.05) 100%
+    );
+    transition: background 0.5s ease;
+  }
+
+  /* Lighter version for alternating sections */
+  .theme-section-light {
+    background: linear-gradient(
+      135deg,
+      rgba(var(--theme-r), var(--theme-g), var(--theme-b), 0.15) 0%,
+      rgba(var(--theme-r), var(--theme-g), var(--theme-b), 0.08) 100%
+    );
+    transition: background 0.5s ease;
+  }
 }

@@ -1,411 +1,720 @@
 import { Heart, MapPin, Calendar, Users, Menu, X } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
+import { motion, useScroll, useTransform, Variants } from 'framer-motion';
 import { CeremonyCards } from './components/CeremonyCards';
 import { Countdown } from './components/Countdown';
 import { Parallax } from './components/Parallax';
+import { useTheme } from './context/ThemeContext';
+
+// Animation variants
+const fadeInUp: Variants = {
+  hidden: { opacity: 0, y: 30 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.6 } },
+};
+
+const staggerContainer: Variants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: { staggerChildren: 0.15, delayChildren: 0.2 },
+  },
+};
+
+const scaleIn: Variants = {
+  hidden: { opacity: 0, scale: 0.9 },
+  visible: {
+    opacity: 1,
+    scale: 1,
+    transition: { duration: 0.5 },
+  },
+};
+
+const slideInLeft: Variants = {
+  hidden: { opacity: 0, x: -50 },
+  visible: { opacity: 1, x: 0, transition: { duration: 0.6 } },
+};
+
+const slideInRight: Variants = {
+  hidden: { opacity: 0, x: 50 },
+  visible: { opacity: 1, x: 0, transition: { duration: 0.6 } },
+};
 
 function AppContent() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { scrollYProgress } = useScroll();
+  const { currentColor } = useTheme();
+
+  const navBg = useTransform(
+    scrollYProgress,
+    [0, 0.1],
+    ['rgba(255, 255, 255, 0.9)', 'rgba(255, 255, 255, 0.95)']
+  );
+
+  const coupleNames = ['Ifesinachi', '&', 'Chioma'];
+  const weddingDate = '17th January 2026';
 
   return (
-    <>
-      <div className='min-h-screen bg-white'>
-        <nav className='fixed top-0 w-full bg-white/90 backdrop-blur-sm z-50 border-b border-gray-100'>
-          <div className='max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4 flex items-center justify-between'>
-            <div className='flex items-center gap-2'>
-              <Heart className='w-4 h-4 sm:w-5 sm:h-5 text-rose-300' />
-              <span className='font-serif text-base sm:text-xl'>
-                Ifesinachi & Chioma
-              </span>
-            </div>
+    <div className='min-h-screen bg-white'>
+      {/* Navigation */}
+      <motion.nav
+        style={{ backgroundColor: navBg }}
+        className='fixed top-0 w-full backdrop-blur-sm z-50 border-b border-gray-100'
+      >
+        <div className='max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4 flex items-center justify-between'>
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.5 }}
+            className='flex items-center gap-2'
+          >
+            <motion.div
+              animate={{ scale: [1, 1.2, 1] }}
+              transition={{ duration: 1.5, repeat: Infinity }}
+            >
+              <Heart
+                className='w-4 h-4 sm:w-5 sm:h-5 transition-colors duration-500'
+                style={{ color: 'var(--theme-primary)' }}
+              />
+            </motion.div>
+            <span
+              className='font-serif text-base sm:text-xl transition-all duration-500'
+              style={{
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'text',
+                backgroundClip: 'text',
+              }}
+            >
+              {coupleNames[0]} {coupleNames[1]} {coupleNames[2]}
+            </span>
+          </motion.div>
 
-            <div className='hidden md:flex gap-8 text-sm text-gray-600'>
-              <Link to='/' className='hover:text-gray-900 transition-colors'>
-                Home
-              </Link>
-              <a
-                href='#story'
-                className='hover:text-gray-900 transition-colors'
+          <motion.div
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+            className='hidden md:flex gap-8 text-sm text-gray-600'
+          >
+            {['Home', 'Our Story', 'Program of Event'].map((item) => (
+              <motion.a
+                key={item}
+                href={
+                  item === 'Home'
+                    ? '/'
+                    : item === 'Our Story'
+                    ? '#story'
+                    : '/program-of-event'
+                }
+                whileHover={{ scale: 1.05 }}
+                transition={{ duration: 0.2 }}
+                className='hover:text-gray-900 transition-colors relative group'
               >
-                Our Story
-              </a>
-              <a
-                href='/program-of-event'
-                className='hover:text-gray-900 transition-colors'
-              >
-                Program of Event
-              </a>
-            </div>
+                {item}
+                <span
+                  className='absolute bottom-0 left-0 w-0 h-0.5 transition-all duration-300 group-hover:w-full'
+                  style={{ backgroundColor: 'var(--theme-primary)' }}
+                />
+              </motion.a>
+            ))}
+          </motion.div>
 
-            <button
-              className='md:hidden p-2 text-gray-600'
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
-              aria-label='Toggle menu'
+          <button
+            className='md:hidden p-2 text-gray-600'
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+            aria-label='Toggle menu'
+          >
+            <motion.div
+              animate={{ rotate: isMenuOpen ? 180 : 0 }}
+              transition={{ duration: 0.3 }}
             >
               {isMenuOpen ? (
                 <X className='w-6 h-6' />
               ) : (
                 <Menu className='w-6 h-6' />
               )}
-            </button>
+            </motion.div>
+          </button>
+        </div>
+
+        {/* Mobile Menu */}
+        <motion.div
+          initial={false}
+          animate={{
+            height: isMenuOpen ? 'auto' : 0,
+            opacity: isMenuOpen ? 1 : 0,
+          }}
+          transition={{ duration: 0.3 }}
+          className='md:hidden overflow-hidden bg-white border-b border-gray-100'
+        >
+          <div className='px-6 py-4 flex flex-col gap-4'>
+            {[
+              { label: 'Home', href: '/' },
+              { label: 'Our Story', href: '#story' },
+              { label: 'Program of Event', href: '/program-of-event' },
+            ].map((item, idx) => (
+              <motion.a
+                key={item.label}
+                href={item.href}
+                initial={{ x: -20, opacity: 0 }}
+                animate={{ x: 0, opacity: 1 }}
+                transition={{ delay: idx * 0.1 }}
+                className='text-gray-600 hover:text-gray-900 py-2 transition-colors'
+                onClick={() => setIsMenuOpen(false)}
+              >
+                {item.label}
+              </motion.a>
+            ))}
           </div>
+        </motion.div>
+      </motion.nav>
 
-          {isMenuOpen && (
-            <div className='md:hidden absolute top-full left-0 w-full bg-white border-b border-gray-100 py-4 px-6 flex flex-col gap-4 shadow-lg'>
-              <Link
-                to='/'
-                className='text-gray-600 hover:text-gray-900 py-2'
-                onClick={() => setIsMenuOpen(false)}
+      {/* Hero Section */}
+      <section id='home' className='pt-16 sm:pt-20 px-4 sm:px-6'>
+        <div className='max-w-7xl mx-auto'>
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.8 }}
+            className='relative h-[400px] sm:h-[500px] lg:h-[600px] rounded-2xl sm:rounded-3xl overflow-hidden'
+          >
+            <div
+              className='absolute inset-0 z-10 transition-all duration-500'
+              style={{
+                background: `linear-gradient(to bottom, transparent 0%, rgba(var(--theme-r), var(--theme-g), var(--theme-b), 0.3) 50%, rgba(0, 0, 0, 0.7) 100%)`,
+              }}
+            />
+            <Parallax
+              speed={-30}
+              className='absolute inset-0 w-full h-[120%] -top-[10%]'
+            >
+              <img
+                src='https://images.pexels.com/photos/1444442/pexels-photo-1444442.jpeg?auto=compress&cs=tinysrgb&w=1200'
+                alt='Wedding celebration'
+                className='w-full h-full object-cover'
+              />
+            </Parallax>
+            <div className='absolute inset-0 flex flex-col items-center justify-center gap-4 sm:gap-8 z-20 px-4'>
+              <motion.h1
+                initial={{ opacity: 0, y: 50 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.3 }}
+                className='text-white text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-serif tracking-wider text-center drop-shadow-lg'
               >
-                Home
-              </Link>
-              <a
-                href='#story'
-                className='text-gray-600 hover:text-gray-900 py-2'
-                onClick={() => setIsMenuOpen(false)}
+                JOIN US TO CELEBRATE
+              </motion.h1>
+              <motion.div
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.8, delay: 0.6 }}
               >
-                Our Story
-              </a>
-              <a
-                href='/program-of-event'
-                className='text-gray-600 hover:text-gray-900 py-2'
-                onClick={() => setIsMenuOpen(false)}
-              >
-                Program of Event
-              </a>
+                <Countdown />
+              </motion.div>
             </div>
-          )}
-        </nav>
+          </motion.div>
+        </div>
+      </section>
 
-        <section id='home' className='pt-16 sm:pt-20 px-4 sm:px-6'>
-          <div className='max-w-7xl mx-auto'>
-            <div className='relative h-[400px] sm:h-[500px] lg:h-[600px] rounded-2xl sm:rounded-3xl overflow-hidden'>
-              <div className='absolute inset-0 bg-gradient-to-b from-transparent to-black/50 z-10'></div>
+      {/* Announcement Section */}
+      <section className='py-12 sm:py-16 lg:py-20 px-4 sm:px-6'>
+        <div className='max-w-7xl mx-auto'>
+          <motion.div
+            initial='hidden'
+            whileInView='visible'
+            viewport={{ once: true, margin: '-100px' }}
+            variants={scaleIn}
+            className='flex flex-col md:flex-row items-center gap-6 sm:gap-8 lg:gap-12 rounded-2xl sm:rounded-3xl p-6 sm:p-8 lg:p-12 transition-all duration-500'
+            style={{
+              background: `linear-gradient(135deg, rgba(var(--theme-r), var(--theme-g), var(--theme-b), 0.08) 0%, rgba(var(--theme-r), var(--theme-g), var(--theme-b), 0.03) 100%)`,
+            }}
+          >
+            <motion.div
+              whileHover={{ scale: 1.05, rotate: 5 }}
+              transition={{ duration: 0.3 }}
+              className='w-24 h-24 sm:w-32 sm:h-32 rounded-xl sm:rounded-2xl overflow-hidden shadow-lg flex-shrink-0 relative ring-2 transition-all duration-500'
+            >
               <Parallax
-                speed={-30}
-                className='absolute inset-0 w-full h-[120%] -top-[10%]'
+                speed={-10}
+                className='absolute inset-0 w-full h-[140%] -top-[20%]'
               >
                 <img
-                  src='https://images.pexels.com/photos/1444442/pexels-photo-1444442.jpeg?auto=compress&cs=tinysrgb&w=1200'
-                  alt='Wedding couple'
+                  src='https://images.pexels.com/photos/265722/pexels-photo-265722.jpeg?auto=compress&cs=tinysrgb&w=400'
+                  alt='Wedding rings symbolizing eternal love'
                   className='w-full h-full object-cover'
                 />
               </Parallax>
-              <div className='absolute inset-0 flex flex-col items-center justify-center gap-4 sm:gap-8 z-20 px-4'>
-                <h1 className='text-white text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-serif tracking-wider text-center'>
-                  JOIN US TO CELEBRATE
-                </h1>
-                <Countdown />
-              </div>
-            </div>
-          </div>
-        </section>
+            </motion.div>
 
-        <section className='py-12 sm:py-16 lg:py-20 px-4 sm:px-6'>
-          <div className='max-w-7xl mx-auto'>
-            <div className='flex flex-col md:flex-row items-center gap-6 sm:gap-8 lg:gap-12 bg-gray-50 rounded-2xl sm:rounded-3xl p-6 sm:p-8 lg:p-12'>
-              <div className='w-24 h-24 sm:w-32 sm:h-32 rounded-xl sm:rounded-2xl overflow-hidden shadow-lg flex-shrink-0 relative'>
-                <Parallax
-                  speed={-10}
-                  className='absolute inset-0 w-full h-[140%] -top-[20%]'
-                >
-                  <img
-                    src='https://images.pexels.com/photos/265722/pexels-photo-265722.jpeg?auto=compress&cs=tinysrgb&w=400'
-                    alt='Wedding rings'
-                    className='w-full h-full object-cover'
-                  />
-                </Parallax>
-              </div>
-              <div className='flex-1 text-center md:text-left'>
-                <p className='text-xs sm:text-sm text-gray-500 uppercase tracking-wider mb-2'>
-                  Join us to celebrate
-                </p>
-                <h2 className='text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-serif text-gray-800 mb-2 sm:mb-4'>
-                  Ifesinachi & Chioma
-                </h2>
-                <p className='text-sm sm:text-base text-gray-600 mb-4 sm:mb-6'>
-                  17th Jan 2026
-                </p>
-              </div>
+            <motion.div
+              variants={fadeInUp}
+              className='flex-1 text-center md:text-left'
+            >
+              <motion.p
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                transition={{ delay: 0.2 }}
+                className='text-xs sm:text-sm uppercase tracking-wider mb-2 transition-colors duration-500'
+                style={{ color: 'var(--theme-primary)' }}
+              >
+                Join us to celebrate
+              </motion.p>
+              <motion.h2
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.3 }}
+                className='text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-serif text-gray-800 mb-2 sm:mb-4'
+              >
+                {coupleNames[0]} {coupleNames[1]} {coupleNames[2]}
+              </motion.h2>
+              <motion.p
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                transition={{ delay: 0.4 }}
+                className='text-sm sm:text-base text-gray-600 mb-4 sm:mb-6'
+              >
+                {weddingDate}
+              </motion.p>
+            </motion.div>
+
+            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
               <Link
                 to='/program-of-event'
-                className='bg-[var(--theme-primary)] text-white px-6 sm:px-8 py-2.5 sm:py-3 rounded-full text-sm font-medium border border-[var(--theme-primary)] hover:bg-white hover:text-[var(--theme-primary)] transition-colors w-full md:w-auto text-center'
+                className='px-6 sm:px-8 py-2.5 sm:py-3 rounded-full text-sm font-medium transition-all duration-300 w-full md:w-auto text-center inline-block shadow-lg hover:shadow-xl'
+                style={{
+                  backgroundColor: 'var(--theme-primary)',
+                  color: 'white',
+                  border: '2px solid var(--theme-primary)',
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.backgroundColor = 'white';
+                  e.currentTarget.style.color = 'var(--theme-primary)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.backgroundColor =
+                    'var(--theme-primary)';
+                  e.currentTarget.style.color = 'white';
+                }}
               >
                 Program of Event
               </Link>
-            </div>
-          </div>
-        </section>
+            </motion.div>
+          </motion.div>
+        </div>
+      </section>
 
-        <section id='story' className='py-8 sm:py-12 px-4 sm:px-6'>
-          <div className='max-w-7xl mx-auto grid md:grid-cols-2 gap-6 sm:gap-8'>
-            <div className='bg-gray-50 rounded-2xl sm:rounded-3xl p-6 sm:p-8 lg:p-12'>
-              <h3 className='text-xl sm:text-2xl font-serif text-gray-800 mb-4 sm:mb-6'>
-                Our Story
-              </h3>
-              <p className='text-sm sm:text-base text-gray-600 leading-relaxed mb-6 sm:mb-8'>
-                It's a love-at-first-swipe, corner-to-corner eye contact thing.
-                We've through the most powerful moments and funny bad fortune to
-                arrive at forever grateful moment.
-              </p>
+      {/* Story & Gallery Section */}
+      <section id='story' className='py-8 sm:py-12 px-4 sm:px-6'>
+        <motion.div
+          initial='hidden'
+          whileInView='visible'
+          viewport={{ once: true, margin: '-100px' }}
+          variants={staggerContainer}
+          className='max-w-7xl mx-auto grid md:grid-cols-2 gap-6 sm:gap-8'
+        >
+          {/* Our Story */}
+          <motion.div
+            variants={slideInLeft}
+            className='rounded-2xl sm:rounded-3xl p-6 sm:p-8 lg:p-12 transition-all duration-500'
+            style={{
+              background: `linear-gradient(135deg, rgba(var(--theme-r), var(--theme-g), var(--theme-b), 0.08) 0%, rgba(var(--theme-r), var(--theme-g), var(--theme-b), 0.03) 100%)`,
+            }}
+          >
+            <motion.h3
+              variants={fadeInUp}
+              className='text-xl sm:text-2xl font-serif text-gray-800 mb-4 sm:mb-6'
+            >
+              Our Love Story
+            </motion.h3>
+            <motion.p
+              variants={fadeInUp}
+              className='text-sm sm:text-base text-gray-600 leading-relaxed mb-6 sm:mb-8'
+            >
+              From a chance encounter to a lifetime together. Our journey has
+              been filled with laughter, growth, and unwavering love. Every
+              moment has led us to this beautiful celebration of our union.
+            </motion.p>
+            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
               <a
                 href='/gift-registry'
-                className='inline-block bg-[var(--theme-primary)] text-white px-8 sm:px-10 py-3 sm:py-4 rounded-full text-sm sm:text-base font-bold shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all duration-300 border-2 border-[var(--theme-primary)] hover:bg-white hover:text-[var(--theme-primary)] w-full sm:w-auto text-center'
+                className='inline-block px-8 sm:px-10 py-3 sm:py-4 rounded-full text-sm sm:text-base font-bold shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all duration-300 w-full sm:w-auto text-center'
+                style={{
+                  backgroundColor: 'var(--theme-primary)',
+                  color: 'white',
+                  border: '2px solid var(--theme-primary)',
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.backgroundColor = 'white';
+                  e.currentTarget.style.color = 'var(--theme-primary)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.backgroundColor =
+                    'var(--theme-primary)';
+                  e.currentTarget.style.color = 'white';
+                }}
               >
-                GIFT NOW →
+                SEND YOUR BLESSINGS →
               </a>
-            </div>
+            </motion.div>
+          </motion.div>
 
+          {/* Photo Gallery */}
+          <motion.div variants={slideInRight}>
             <Link
               to='/gallery'
-              className='bg-gray-50 rounded-2xl sm:rounded-3xl p-6 sm:p-8 lg:p-12 block hover:shadow-lg transition-all duration-300 cursor-pointer group'
+              className='rounded-2xl sm:rounded-3xl p-6 sm:p-8 lg:p-12 block hover:shadow-lg transition-all duration-500 cursor-pointer group h-full'
+              style={{
+                background: `linear-gradient(135deg, rgba(var(--theme-r), var(--theme-g), var(--theme-b), 0.08) 0%, rgba(var(--theme-r), var(--theme-g), var(--theme-b), 0.03) 100%)`,
+              }}
             >
               <div className='flex justify-between items-start mb-4 sm:mb-6'>
                 <div>
                   <h3 className='text-xl sm:text-2xl font-serif text-gray-800 mb-2'>
-                    Photo Gallery
+                    Our Memories
                   </h3>
                   <p className='text-xs sm:text-sm text-gray-600'>
-                    Relive the Memorable
+                    Treasured moments
                     <br />
-                    Your Moments
+                    captured in time
                   </p>
                 </div>
-                <span className='text-[var(--theme-primary)] opacity-0 group-hover:opacity-100 transition-opacity font-medium hidden sm:inline'>
+                <motion.span
+                  initial={{ opacity: 0, x: -10 }}
+                  whileHover={{ opacity: 1, x: 0 }}
+                  className='font-medium hidden sm:inline transition-colors duration-500'
+                  style={{ color: 'var(--theme-primary)' }}
+                >
                   View All →
-                </span>
+                </motion.span>
               </div>
-              <div className='grid grid-cols-3 gap-2 sm:gap-3'>
+              <motion.div
+                variants={staggerContainer}
+                className='grid grid-cols-3 gap-2 sm:gap-3'
+              >
                 {[
                   'https://images.pexels.com/photos/1043902/pexels-photo-1043902.jpeg?auto=compress&cs=tinysrgb&w=300',
                   'https://images.pexels.com/photos/1024993/pexels-photo-1024993.jpeg?auto=compress&cs=tinysrgb&w=300',
                   'https://images.pexels.com/photos/1616113/pexels-photo-1616113.jpeg?auto=compress&cs=tinysrgb&w=300',
                 ].map((src, idx) => (
-                  <div
+                  <motion.div
                     key={idx}
-                    className='aspect-square rounded-lg overflow-hidden'
+                    variants={scaleIn}
+                    whileHover={{ scale: 1.1, zIndex: 10 }}
+                    transition={{ duration: 0.3 }}
+                    className='aspect-square rounded-lg overflow-hidden ring-1 transition-all duration-300'
                   >
                     <img
                       src={src}
-                      alt={`Gallery ${idx + 1}`}
-                      className='w-full h-full object-cover group-hover:scale-110 transition-transform duration-500'
-                      style={{ transitionDelay: `${idx * 75}ms` }}
-                    />
-                  </div>
-                ))}
-              </div>
-            </Link>
-          </div>
-        </section>
-
-        <section className='py-8 sm:py-12 px-4 sm:px-6'>
-          <div className='max-w-7xl mx-auto'>
-            <CeremonyCards />
-          </div>
-        </section>
-
-        <section className='py-12 sm:py-16 lg:py-20 px-4 sm:px-6 theme-section-light rounded-t-[50px] sm:rounded-t-[100px] mt-12 sm:mt-20'>
-          <div className='max-w-7xl mx-auto'>
-            <div className='grid md:grid-cols-2 gap-8 sm:gap-12 items-start mb-12 sm:mb-20'>
-              <div>
-                <div className='flex items-center gap-2 mb-4'>
-                  <Users className='w-4 h-4 sm:w-5 sm:h-5 text-gray-600' />
-                  <p className='text-xs sm:text-sm text-gray-600 uppercase tracking-wider'>
-                    COUPLE
-                  </p>
-                </div>
-                <h2 className='text-2xl sm:text-3xl lg:text-4xl font-serif text-gray-800 mb-6 sm:mb-8'>
-                  Wedding Church Service
-                </h2>
-                <div className='space-y-4 text-gray-600 mb-6 sm:mb-8'>
-                  <div className='flex items-start gap-3'>
-                    <MapPin className='w-4 h-4 sm:w-5 sm:h-5 mt-1 flex-shrink-0' />
-                    <div>
-                      <p className='font-medium text-gray-800 text-sm sm:text-base'>
-                        Location
-                      </p>
-                      <p className='text-xs sm:text-sm'>
-                        5/7 Toyin Popoola Cres, Ikosi Ketu, Lagos 105102, Lagos,
-                        Nigeria
-                      </p>
-                    </div>
-                  </div>
-                  <div className='flex items-start gap-3'>
-                    <Calendar className='w-4 h-4 sm:w-5 sm:h-5 mt-1 flex-shrink-0' />
-                    <div>
-                      <p className='font-medium text-gray-800 text-sm sm:text-base'>
-                        Date
-                      </p>
-                      <p className='text-xs sm:text-sm'>17th January 2026</p>
-                    </div>
-                  </div>
-                  <div className='flex items-start gap-3'>
-                    <Heart className='w-4 h-4 sm:w-5 sm:h-5 mt-1 flex-shrink-0' />
-                    <div>
-                      <p className='font-medium text-gray-800 text-sm sm:text-base'>
-                        Service Time
-                      </p>
-                      <p className='text-xs sm:text-sm'>10:00 AM</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className='relative'>
-                <div className='rounded-2xl sm:rounded-3xl overflow-hidden shadow-2xl'>
-                  <iframe
-                    src='https://www.google.com/maps?q=Kingdom+of+Mercy+Ministries,+Lagos,+Nigeria&output=embed'
-                    title='Church Location'
-                    width='100%'
-                    height='300'
-                    className='sm:h-[400px]'
-                    style={{ border: 0 }}
-                    allowFullScreen={true}
-                    loading='lazy'
-                    referrerPolicy='no-referrer-when-downgrade'
-                  ></iframe>
-                </div>
-              </div>
-            </div>
-
-            <div className='grid md:grid-cols-2 gap-8 sm:gap-12 items-start'>
-              <div className='md:order-2'>
-                <div className='flex items-center gap-2 mb-4'>
-                  <Users className='w-4 h-4 sm:w-5 sm:h-5 text-gray-600' />
-                  <p className='text-xs sm:text-sm text-gray-600 uppercase tracking-wider'>
-                    CELEBRATION
-                  </p>
-                </div>
-                <h2 className='text-2xl sm:text-3xl lg:text-4xl font-serif text-gray-800 mb-6 sm:mb-8'>
-                  Grand Reception
-                </h2>
-                <div className='space-y-4 text-gray-600 mb-6 sm:mb-8'>
-                  <div className='flex items-start gap-3'>
-                    <MapPin className='w-4 h-4 sm:w-5 sm:h-5 mt-1 flex-shrink-0' />
-                    <div>
-                      <p className='font-medium text-gray-800 text-sm sm:text-base'>
-                        Location
-                      </p>
-                      <p className='text-xs sm:text-sm'>
-                        19a, Mobolaji Bank Anthony Way, Maryland
-                      </p>
-                    </div>
-                  </div>
-                  <div className='flex items-start gap-3'>
-                    <Calendar className='w-4 h-4 sm:w-5 sm:h-5 mt-1 flex-shrink-0' />
-                    <div>
-                      <p className='font-medium text-gray-800 text-sm sm:text-base'>
-                        Date
-                      </p>
-                      <p className='text-xs sm:text-sm'>17th January 2026</p>
-                    </div>
-                  </div>
-                  <div className='flex items-start gap-3'>
-                    <Heart className='w-4 h-4 sm:w-5 sm:h-5 mt-1 flex-shrink-0' />
-                    <div>
-                      <p className='font-medium text-gray-800 text-sm sm:text-base'>
-                        Time
-                      </p>
-                      <p className='text-xs sm:text-sm'>1:00 PM</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className='relative md:order-1'>
-                <div className='rounded-2xl sm:rounded-3xl overflow-hidden shadow-2xl'>
-                  <iframe
-                    src='https://www.google.com/maps?q=19a+Mobolaji+Bank+Anthony+Way,+Maryland,+Lagos,+Nigeria&output=embed'
-                    title='Reception Location'
-                    width='100%'
-                    height='300'
-                    className='sm:h-[400px]'
-                    style={{ border: 0 }}
-                    allowFullScreen={true}
-                    loading='lazy'
-                    referrerPolicy='no-referrer-when-downgrade'
-                  ></iframe>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <section className='py-12 sm:py-16 lg:py-20 px-4 sm:px-6 theme-section-light'>
-          <div className='max-w-7xl mx-auto'>
-            <div className='grid sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8'>
-              {[
-                {
-                  img: 'https://images.pexels.com/photos/1516680/pexels-photo-1516680.jpeg?auto=compress&cs=tinysrgb&w=200',
-                  text: '"I LOVE AFFICIAL STORY, I\'LL NEVER THROUGH THEMSELVES BEING NO EENIE. ARE SURE PROFESSIONAL EVENTS PERFECT!"',
-                  name: 'Dr. Kate',
-                  title: 'Paris Tour',
-                },
-                {
-                  img: 'https://images.pexels.com/photos/1239291/pexels-photo-1239291.jpeg?auto=compress&cs=tinysrgb&w=200',
-                  text: '"I HAVE ONE WES YOURSELF. 15AM TILL 2018. The greatest, a little intimate!"',
-                  name: 'JHB K. Nguyen',
-                  title: 'Four impact',
-                },
-                {
-                  img: 'https://images.pexels.com/photos/733872/pexels-photo-733872.jpeg?auto=compress&cs=tinysrgb&w=200',
-                  text: '"TO OUR BEAULY TEACHERS, ER, (FRIENDS VISIT IT UPDATE HE HAT DAYS)!"',
-                  name: 'Ava Evelyn',
-                  title: 'Happy World',
-                },
-              ].map((testimonial, idx) => (
-                <div
-                  key={idx}
-                  className='bg-white rounded-2xl sm:rounded-3xl p-6 sm:p-8 text-center'
-                >
-                  <div className='w-16 h-16 sm:w-20 sm:h-20 rounded-full overflow-hidden mx-auto mb-4 sm:mb-6 bg-gray-200'>
-                    <img
-                      src={testimonial.img}
-                      alt='Testimonial'
+                      alt={`Cherished moment ${idx + 1}`}
                       className='w-full h-full object-cover'
                     />
-                  </div>
-                  <p className='text-gray-600 text-xs sm:text-sm leading-relaxed mb-4 sm:mb-6'>
-                    {testimonial.text}
-                  </p>
-                  <p className='font-medium text-gray-800 text-sm sm:text-base'>
-                    {testimonial.name}
-                  </p>
-                  <p className='text-xs sm:text-sm text-gray-500'>
-                    {testimonial.title}
-                  </p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
+                  </motion.div>
+                ))}
+              </motion.div>
+            </Link>
+          </motion.div>
+        </motion.div>
+      </section>
 
-        <footer className='theme-section-light px-4 sm:px-6 py-8 sm:py-12'>
-          <div className='max-w-7xl mx-auto text-center'>
-            <div className='flex justify-center gap-6 sm:gap-8 text-xs sm:text-sm text-gray-600 mb-6 sm:mb-8'>
-              <a href='#' className='hover:text-gray-900 transition-colors'>
-                Follow
-              </a>
-            </div>
-            <div className='flex justify-center gap-3 sm:gap-4'>
-              <a
-                href='#'
-                className='w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center text-white hover:bg-gray-700 transition-colors'
-                aria-label='Twitter'
+      {/* Ceremony Cards */}
+      <section className='py-8 sm:py-12 px-4 sm:px-6'>
+        <motion.div
+          initial='hidden'
+          whileInView='visible'
+          viewport={{ once: true, margin: '-100px' }}
+          variants={fadeInUp}
+          className='max-w-7xl mx-auto'
+        >
+          <CeremonyCards />
+        </motion.div>
+      </section>
+
+      {/* Wedding Events Section */}
+      <section className='py-12 sm:py-16 lg:py-20 px-4 sm:px-6 theme-section-light rounded-t-[50px] sm:rounded-t-[100px] mt-12 sm:mt-20'>
+        <div className='max-w-7xl mx-auto'>
+          {/* Church Service */}
+          <motion.div
+            initial='hidden'
+            whileInView='visible'
+            viewport={{ once: true, margin: '-100px' }}
+            variants={staggerContainer}
+            className='grid md:grid-cols-2 gap-8 sm:gap-12 items-start mb-12 sm:mb-20'
+          >
+            <motion.div variants={slideInLeft}>
+              <motion.div
+                variants={fadeInUp}
+                className='flex items-center gap-2 mb-4'
               >
-                <span className='text-sm'>𝕏</span>
-              </a>
-              <a
-                href='#'
-                className='w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center text-white hover:bg-gray-700 transition-colors'
-                aria-label='Instagram'
+                <Users
+                  className='w-4 h-4 sm:w-5 sm:h-5 transition-colors duration-500'
+                  style={{ color: 'var(--theme-primary)' }}
+                />
+                <p className='text-xs sm:text-sm text-gray-600 uppercase tracking-wider'>
+                  SACRED CEREMONY
+                </p>
+              </motion.div>
+              <motion.h2
+                variants={fadeInUp}
+                className='text-2xl sm:text-3xl lg:text-4xl font-serif text-gray-800 mb-6 sm:mb-8'
               >
-                <span className='text-sm'>IG</span>
-              </a>
-            </div>
-          </div>
-        </footer>
-      </div>
-    </>
+                Holy Matrimony
+              </motion.h2>
+              <motion.div
+                variants={staggerContainer}
+                className='space-y-4 text-gray-600 mb-6 sm:mb-8'
+              >
+                {[
+                  {
+                    icon: MapPin,
+                    label: 'Venue',
+                    value:
+                      '5/7 Toyin Popoola Cres, Ikosi Ketu, Lagos 105102, Nigeria',
+                  },
+                  { icon: Calendar, label: 'Date', value: weddingDate },
+                  { icon: Heart, label: 'Ceremony Begins', value: '10:00 AM' },
+                ].map((item, idx) => (
+                  <motion.div
+                    key={idx}
+                    variants={fadeInUp}
+                    className='flex items-start gap-3'
+                  >
+                    <item.icon
+                      className='w-4 h-4 sm:w-5 sm:h-5 mt-1 flex-shrink-0 transition-colors duration-500'
+                      style={{ color: 'var(--theme-primary)' }}
+                    />
+                    <div>
+                      <p className='font-medium text-gray-800 text-sm sm:text-base'>
+                        {item.label}
+                      </p>
+                      <p className='text-xs sm:text-sm'>{item.value}</p>
+                    </div>
+                  </motion.div>
+                ))}
+              </motion.div>
+            </motion.div>
+
+            <motion.div variants={slideInRight} className='relative'>
+              <motion.div
+                whileHover={{ scale: 1.02 }}
+                transition={{ duration: 0.3 }}
+                className='rounded-2xl sm:rounded-3xl overflow-hidden shadow-2xl ring-2 transition-all duration-500'
+              >
+                <iframe
+                  src='https://www.google.com/maps?q=Kingdom+of+Mercy+Ministries,+Lagos,+Nigeria&output=embed'
+                  title='Church Location'
+                  width='100%'
+                  height='300'
+                  className='sm:h-[400px]'
+                  style={{ border: 0 }}
+                  allowFullScreen={true}
+                  loading='lazy'
+                  referrerPolicy='no-referrer-when-downgrade'
+                ></iframe>
+              </motion.div>
+            </motion.div>
+          </motion.div>
+
+          {/* Reception */}
+          <motion.div
+            initial='hidden'
+            whileInView='visible'
+            viewport={{ once: true, margin: '-100px' }}
+            variants={staggerContainer}
+            className='grid md:grid-cols-2 gap-8 sm:gap-12 items-start'
+          >
+            <motion.div variants={slideInRight} className='md:order-2'>
+              <motion.div
+                variants={fadeInUp}
+                className='flex items-center gap-2 mb-4'
+              >
+                <Users
+                  className='w-4 h-4 sm:w-5 sm:h-5 transition-colors duration-500'
+                  style={{ color: 'var(--theme-primary)' }}
+                />
+                <p className='text-xs sm:text-sm text-gray-600 uppercase tracking-wider'>
+                  JOYFUL CELEBRATION
+                </p>
+              </motion.div>
+              <motion.h2
+                variants={fadeInUp}
+                className='text-2xl sm:text-3xl lg:text-4xl font-serif text-gray-800 mb-6 sm:mb-8'
+              >
+                Wedding Reception
+              </motion.h2>
+              <motion.div
+                variants={staggerContainer}
+                className='space-y-4 text-gray-600 mb-6 sm:mb-8'
+              >
+                {[
+                  {
+                    icon: MapPin,
+                    label: 'Venue',
+                    value: '19a, Mobolaji Bank Anthony Way, Maryland',
+                  },
+                  { icon: Calendar, label: 'Date', value: weddingDate },
+                  {
+                    icon: Heart,
+                    label: 'Celebration Starts',
+                    value: '1:00 PM',
+                  },
+                ].map((item, idx) => (
+                  <motion.div
+                    key={idx}
+                    variants={fadeInUp}
+                    className='flex items-start gap-3'
+                  >
+                    <item.icon
+                      className='w-4 h-4 sm:w-5 sm:h-5 mt-1 flex-shrink-0 transition-colors duration-500'
+                      style={{ color: 'var(--theme-primary)' }}
+                    />
+                    <div>
+                      <p className='font-medium text-gray-800 text-sm sm:text-base'>
+                        {item.label}
+                      </p>
+                      <p className='text-xs sm:text-sm'>{item.value}</p>
+                    </div>
+                  </motion.div>
+                ))}
+              </motion.div>
+            </motion.div>
+
+            <motion.div variants={slideInLeft} className='relative md:order-1'>
+              <motion.div
+                whileHover={{ scale: 1.02 }}
+                transition={{ duration: 0.3 }}
+                className='rounded-2xl sm:rounded-3xl overflow-hidden shadow-2xl ring-2 transition-all duration-500'
+              >
+                <iframe
+                  src='https://www.google.com/maps?q=19a+Mobolaji+Bank+Anthony+Way,+Maryland,+Lagos,+Nigeria&output=embed'
+                  title='Reception Location'
+                  width='100%'
+                  height='300'
+                  className='sm:h-[400px]'
+                  style={{ border: 0 }}
+                  allowFullScreen={true}
+                  loading='lazy'
+                  referrerPolicy='no-referrer-when-downgrade'
+                ></iframe>
+              </motion.div>
+            </motion.div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Testimonials */}
+      <section className='py-12 sm:py-16 lg:py-20 px-4 sm:px-6 theme-section-light'>
+        <div className='max-w-7xl mx-auto'>
+          <motion.div
+            initial='hidden'
+            whileInView='visible'
+            viewport={{ once: true, margin: '-100px' }}
+            variants={staggerContainer}
+            className='grid sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8'
+          >
+            {[
+              {
+                img: 'https://images.pexels.com/photos/1516680/pexels-photo-1516680.jpeg?auto=compress&cs=tinysrgb&w=200',
+                text: 'What a beautiful celebration of love! The ceremony was heartfelt and the reception was absolutely magical. Wishing you both a lifetime of happiness!',
+                name: 'Dr. Kate Anderson',
+                title: 'Family Friend',
+              },
+              {
+                img: 'https://images.pexels.com/photos/1239291/pexels-photo-1239291.jpeg?auto=compress&cs=tinysrgb&w=200',
+                text: "I've never seen two people more perfect for each other. Your love story inspires us all. Congratulations on this wonderful journey!",
+                name: 'John K. Nguyen',
+                title: 'College Friend',
+              },
+              {
+                img: 'https://images.pexels.com/photos/733872/pexels-photo-733872.jpeg?auto=compress&cs=tinysrgb&w=200',
+                text: 'To witness your love bloom has been such a joy. May your marriage be filled with laughter, adventure, and endless love!',
+                name: 'Ava Evelyn',
+                title: 'Childhood Friend',
+              },
+            ].map((testimonial, idx) => (
+              <motion.div
+                key={idx}
+                variants={scaleIn}
+                whileHover={{
+                  y: -8,
+                  boxShadow:
+                    '0 20px 40px rgba(var(--theme-r), var(--theme-g), var(--theme-b), 0.15)',
+                }}
+                transition={{ duration: 0.3 }}
+                className='bg-white rounded-2xl sm:rounded-3xl p-6 sm:p-8 text-center ring-1 transition-all duration-500'
+              >
+                <motion.div
+                  whileHover={{ scale: 1.1, rotate: 5 }}
+                  transition={{ duration: 0.3 }}
+                  className='w-16 h-16 sm:w-20 sm:h-20 rounded-full overflow-hidden mx-auto mb-4 sm:mb-6 bg-gray-200 ring-2 transition-all duration-500'
+                >
+                  <img
+                    src={testimonial.img}
+                    alt={testimonial.name}
+                    className='w-full h-full object-cover'
+                  />
+                </motion.div>
+                <p className='text-gray-600 text-xs sm:text-sm leading-relaxed mb-4 sm:mb-6 italic'>
+                  "{testimonial.text}"
+                </p>
+                <p className='font-medium text-gray-800 text-sm sm:text-base'>
+                  {testimonial.name}
+                </p>
+                <p className='text-xs sm:text-sm text-gray-500'>
+                  {testimonial.title}
+                </p>
+              </motion.div>
+            ))}
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer className='theme-section-light px-4 sm:px-6 py-8 sm:py-12'>
+        <motion.div
+          initial='hidden'
+          whileInView='visible'
+          viewport={{ once: true }}
+          variants={fadeInUp}
+          className='max-w-7xl mx-auto text-center'
+        >
+          <motion.div
+            variants={fadeInUp}
+            className='flex justify-center gap-6 sm:gap-8 text-xs sm:text-sm text-gray-600 mb-6 sm:mb-8'
+          >
+            <a
+              href='#'
+              className='hover:text-gray-900 transition-colors font-medium relative group'
+            >
+              Share Our Joy
+              <span
+                className='absolute bottom-0 left-0 w-0 h-0.5 transition-all duration-300 group-hover:w-full'
+                style={{ backgroundColor: 'var(--theme-primary)' }}
+              />
+            </a>
+          </motion.div>
+          <motion.div
+            variants={staggerContainer}
+            className='flex justify-center gap-3 sm:gap-4'
+          >
+            {[
+              { label: 'Twitter', icon: '𝕏' },
+              { label: 'Instagram', icon: 'IG' },
+            ].map((social) => (
+              <motion.a
+                key={social.label}
+                href='#'
+                variants={scaleIn}
+                whileHover={{ scale: 1.15, y: -3 }}
+                whileTap={{ scale: 0.95 }}
+                className='w-10 h-10 rounded-full flex items-center justify-center text-white transition-all duration-300'
+                aria-label={social.label}
+                style={{ backgroundColor: 'var(--theme-primary)' }}
+              >
+                <span className='text-sm'>{social.icon}</span>
+              </motion.a>
+            ))}
+          </motion.div>
+        </motion.div>
+      </footer>
+    </div>
   );
 }
 
