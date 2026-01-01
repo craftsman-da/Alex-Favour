@@ -5,23 +5,6 @@ export interface GalleryImage {
 }
 
 // Remote images (can be empty if not needed)
-export const remoteImages: GalleryImage[] = [
-  {
-    src: 'https://images.pexels.com/photos/1444442/pexels-photo-1444442.jpeg?auto=compress&cs=tinysrgb&w=800',
-    alt: 'Beautiful couple moment',
-    category: 'couple',
-  },
-  {
-    src: 'https://images.pexels.com/photos/1043902/pexels-photo-1043902.jpeg?auto=compress&cs=tinysrgb&w=800',
-    alt: 'Romantic wedding scene',
-    category: 'prewedding',
-  },
-  {
-    src: 'https://images.pexels.com/photos/1024993/pexels-photo-1024993.jpeg?auto=compress&cs=tinysrgb&w=800',
-    alt: 'Engagement celebration',
-    category: 'engagement',
-  },
-];
 
 // Function to load local images from assets
 export function loadLocalImages(): GalleryImage[] {

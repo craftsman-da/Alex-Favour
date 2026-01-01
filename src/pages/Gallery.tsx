@@ -1,11 +1,7 @@
 import { useState, useMemo } from 'react';
 import { Heart, ArrowLeft, X, ChevronLeft, ChevronRight } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
-import {
-  remoteImages,
-  loadLocalImages,
-  GalleryImage,
-} from '../data/galleryData';
+import { loadLocalImages } from '../data/galleryData';
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -29,7 +25,7 @@ const itemVariants = {
 export function Gallery() {
   const images = useMemo(() => {
     const localImages = loadLocalImages();
-    return [...remoteImages, ...localImages];
+    return [...localImages];
   }, []);
 
   const [selectedImageIndex, setSelectedImageIndex] = useState<number | null>(
@@ -186,7 +182,7 @@ export function Gallery() {
           >
             <p className='flex items-center justify-center gap-2'>
               <Heart className='w-4 h-4 fill-rose-400 text-rose-400' />
-              {images.length} precious moments captured
+              {images.length} Precious moments captured
             </p>
           </motion.div>
         </div>

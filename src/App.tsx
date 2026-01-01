@@ -188,7 +188,7 @@ function AppContent() {
               className='absolute inset-0 w-full h-[120%] -top-[10%]'
             >
               <img
-                src='https://images.pexels.com/photos/1444442/pexels-photo-1444442.jpeg?auto=compress&cs=tinysrgb&w=1200'
+                src='/src/assets/couplec6.png'
                 alt='Wedding celebration'
                 className='w-full h-full object-cover'
               />
@@ -237,7 +237,7 @@ function AppContent() {
                 className='absolute inset-0 w-full h-[140%] -top-[20%]'
               >
                 <img
-                  src='https://images.pexels.com/photos/265722/pexels-photo-265722.jpeg?auto=compress&cs=tinysrgb&w=400'
+                  src='/src/assets/couplered6.jpg'
                   alt='Wedding rings symbolizing eternal love'
                   className='w-full h-full object-cover'
                 />
@@ -368,12 +368,12 @@ function AppContent() {
               <div className='flex justify-between items-start mb-4 sm:mb-6'>
                 <div>
                   <h3 className='text-xl sm:text-2xl font-serif text-gray-800 mb-2'>
-                    Our Memories
+                    Our Gallery
                   </h3>
                   <p className='text-xs sm:text-sm text-gray-600'>
                     Treasured moments
                     <br />
-                    captured in time
+                    Captured in time
                   </p>
                 </div>
                 <motion.span
@@ -390,9 +390,9 @@ function AppContent() {
                 className='grid grid-cols-3 gap-2 sm:gap-3'
               >
                 {[
-                  'https://images.pexels.com/photos/1043902/pexels-photo-1043902.jpeg?auto=compress&cs=tinysrgb&w=300',
-                  'https://images.pexels.com/photos/1024993/pexels-photo-1024993.jpeg?auto=compress&cs=tinysrgb&w=300',
-                  'https://images.pexels.com/photos/1616113/pexels-photo-1616113.jpeg?auto=compress&cs=tinysrgb&w=300',
+                  'src/assets/couplered(3).jpg',
+                  'src/assets/coupley(2).jpg',
+                  'src/assets/couplec(2).jpg',
                 ].map((src, idx) => (
                   <motion.div
                     key={idx}
@@ -611,21 +611,21 @@ function AppContent() {
           >
             {[
               {
-                img: 'https://images.pexels.com/photos/1516680/pexels-photo-1516680.jpeg?auto=compress&cs=tinysrgb&w=200',
+                img: 'src/assets/wellwish.png',
                 text: 'What a beautiful celebration of love! The ceremony was heartfelt and the reception was absolutely magical. Wishing you both a lifetime of happiness!',
-                name: 'Dr. Kate Anderson',
-                title: 'Family Friend',
+                name: 'Pastor kc Eze',
+                title: 'God Father',
               },
               {
-                img: 'https://images.pexels.com/photos/1239291/pexels-photo-1239291.jpeg?auto=compress&cs=tinysrgb&w=200',
+                img: 'src/assets/wellwish.png',
                 text: "I've never seen two people more perfect for each other. Your love story inspires us all. Congratulations on this wonderful journey!",
-                name: 'John K. Nguyen',
-                title: 'College Friend',
+                name: 'Mr Paul Nguta',
+                title: "Bride's Father",
               },
               {
-                img: 'https://images.pexels.com/photos/733872/pexels-photo-733872.jpeg?auto=compress&cs=tinysrgb&w=200',
+                img: 'src/assets/wellwish.png',
                 text: 'To witness your love bloom has been such a joy. May your marriage be filled with laughter, adventure, and endless love!',
-                name: 'Ava Evelyn',
+                name: 'Chidubem Genexsis',
                 title: 'Childhood Friend',
               },
             ].map((testimonial, idx) => (

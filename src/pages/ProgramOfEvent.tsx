@@ -17,24 +17,6 @@ const scaleIn: Variants = {
   visible: { opacity: 1, scale: 1, transition: { duration: 0.6 } },
 };
 
-const slideInLeft: Variants = {
-  hidden: { opacity: 0, x: -50 },
-  visible: {
-    opacity: 1,
-    x: 0,
-    transition: { duration: 0.6, ease: 'easeOut' },
-  },
-};
-
-const slideInRight: Variants = {
-  hidden: { opacity: 0, x: 50 },
-  visible: {
-    opacity: 1,
-    x: 0,
-    transition: { duration: 0.6, ease: 'easeOut' },
-  },
-};
-
 const staggerContainer: Variants = {
   hidden: { opacity: 0 },
   visible: {
@@ -53,14 +35,6 @@ const timelineItem: Variants = {
 };
 
 // Mobile-specific slide variants
-const mobileSlideIn: Variants = {
-  hidden: { opacity: 0, x: -30 },
-  visible: {
-    opacity: 1,
-    x: 0,
-    transition: { duration: 0.5, ease: 'easeOut' },
-  },
-};
 
 export function ProgramOfEvent() {
   const { currentColor } = useTheme();
