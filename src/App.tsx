@@ -186,7 +186,7 @@ function AppContent() {
               transition={{ delay: 0.1 }}
             >
               <Link
-                to='#story'
+                to='/#story'
                 className='block text-gray-600 hover:text-gray-900 py-3 px-4 rounded-lg hover:bg-gray-50 transition-colors'
                 onClick={() => setIsMenuOpen(false)}
               >
