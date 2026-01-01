@@ -79,7 +79,7 @@ export function GiftRegistry() {
             )} transition-colors flex items-center gap-2`}
             whileHover={{ x: -5 }}
           >
-            ← Back to Home
+            ← Back Home
           </motion.a>
         </div>
       </motion.nav>

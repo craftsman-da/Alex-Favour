@@ -77,49 +77,69 @@ function AppContent() {
                 style={{ color: 'var(--theme-primary)' }}
               />
             </motion.div>
-            <span
+            <Link
+              to='/'
               className='font-serif text-base sm:text-xl transition-all duration-500'
-              style={{
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'text',
-                backgroundClip: 'text',
-              }}
             >
               {coupleNames[0]} {coupleNames[1]} {coupleNames[2]}
-            </span>
+            </Link>
           </motion.div>
 
           <motion.div
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
-            className='hidden md:flex gap-8 text-sm text-gray-600'
+            className='hidden md:flex gap-6 lg:gap-8 text-sm text-gray-600'
           >
-            {['Home', 'Our Story', 'Program of Event'].map((item) => (
-              <motion.a
-                key={item}
-                href={
-                  item === 'Home'
-                    ? '/'
-                    : item === 'Our Story'
-                    ? '#story'
-                    : '/program-of-event'
-                }
-                whileHover={{ scale: 1.05 }}
-                transition={{ duration: 0.2 }}
+            <motion.div
+              whileHover={{ scale: 1.05 }}
+              transition={{ duration: 0.2 }}
+            >
+              <Link
+                to='/'
                 className='hover:text-gray-900 transition-colors relative group'
               >
-                {item}
+                Home
                 <span
                   className='absolute bottom-0 left-0 w-0 h-0.5 transition-all duration-300 group-hover:w-full'
                   style={{ backgroundColor: 'var(--theme-primary)' }}
                 />
-              </motion.a>
-            ))}
+              </Link>
+            </motion.div>
+            <motion.div
+              whileHover={{ scale: 1.05 }}
+              transition={{ duration: 0.2 }}
+            >
+              <Link
+                to='/our-story'
+                className='hover:text-gray-900 transition-colors relative group'
+              >
+                Our Story
+                <span
+                  className='absolute bottom-0 left-0 w-0 h-0.5 transition-all duration-300 group-hover:w-full'
+                  style={{ backgroundColor: 'var(--theme-primary)' }}
+                />
+              </Link>
+            </motion.div>
+            <motion.div
+              whileHover={{ scale: 1.05 }}
+              transition={{ duration: 0.2 }}
+            >
+              <Link
+                to='/program-of-event'
+                className='hover:text-gray-900 transition-colors relative group whitespace-nowrap'
+              >
+                Program of Event
+                <span
+                  className='absolute bottom-0 left-0 w-0 h-0.5 transition-all duration-300 group-hover:w-full'
+                  style={{ backgroundColor: 'var(--theme-primary)' }}
+                />
+              </Link>
+            </motion.div>
           </motion.div>
 
           <button
-            className='md:hidden p-2 text-gray-600'
+            className='md:hidden p-2 text-gray-600 hover:text-gray-900 transition-colors'
             onClick={() => setIsMenuOpen(!isMenuOpen)}
             aria-label='Toggle menu'
           >
@@ -144,26 +164,48 @@ function AppContent() {
             opacity: isMenuOpen ? 1 : 0,
           }}
           transition={{ duration: 0.3 }}
-          className='md:hidden overflow-hidden bg-white border-b border-gray-100'
+          className='md:hidden overflow-hidden bg-white border-t border-gray-100'
         >
-          <div className='px-6 py-4 flex flex-col gap-4'>
-            {[
-              { label: 'Home', href: '/' },
-              { label: 'Our Story', href: '#story' },
-              { label: 'Program of Event', href: '/program-of-event' },
-            ].map((item, idx) => (
-              <motion.a
-                key={item.label}
-                href={item.href}
-                initial={{ x: -20, opacity: 0 }}
-                animate={{ x: 0, opacity: 1 }}
-                transition={{ delay: idx * 0.1 }}
-                className='text-gray-600 hover:text-gray-900 py-2 transition-colors'
+          <div className='px-4 py-4 flex flex-col gap-1'>
+            <motion.div
+              initial={{ x: -20, opacity: 0 }}
+              animate={{ x: 0, opacity: 1 }}
+              transition={{ delay: 0 }}
+            >
+              <Link
+                to='/'
+                className='block text-gray-600 hover:text-gray-900 py-3 px-4 rounded-lg hover:bg-gray-50 transition-colors'
                 onClick={() => setIsMenuOpen(false)}
               >
-                {item.label}
-              </motion.a>
-            ))}
+                Home
+              </Link>
+            </motion.div>
+            <motion.div
+              initial={{ x: -20, opacity: 0 }}
+              animate={{ x: 0, opacity: 1 }}
+              transition={{ delay: 0.1 }}
+            >
+              <Link
+                to='/our-story'
+                className='block text-gray-600 hover:text-gray-900 py-3 px-4 rounded-lg hover:bg-gray-50 transition-colors'
+                onClick={() => setIsMenuOpen(false)}
+              >
+                Our Story
+              </Link>
+            </motion.div>
+            <motion.div
+              initial={{ x: -20, opacity: 0 }}
+              animate={{ x: 0, opacity: 1 }}
+              transition={{ delay: 0.2 }}
+            >
+              <Link
+                to='/program-of-event'
+                className='block text-gray-600 hover:text-gray-900 py-3 px-4 rounded-lg hover:bg-gray-50 transition-colors'
+                onClick={() => setIsMenuOpen(false)}
+              >
+                Program of Event
+              </Link>
+            </motion.div>
           </div>
         </motion.div>
       </motion.nav>
@@ -278,7 +320,7 @@ function AppContent() {
             <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
               <Link
                 to='/program-of-event'
-                className='px-6 sm:px-8 py-2.5 sm:py-3 rounded-full text-sm font-medium transition-all duration-300 w-full md:w-auto text-center inline-block shadow-lg hover:shadow-xl'
+                className='block px-6 sm:px-8 py-2.5 sm:py-3 rounded-full text-sm font-medium transition-all duration-300 w-full md:w-auto text-center shadow-lg hover:shadow-xl whitespace-nowrap'
                 style={{
                   backgroundColor: 'var(--theme-primary)',
                   color: 'white',
@@ -333,8 +375,8 @@ function AppContent() {
               moment has led us to this beautiful celebration of our union.
             </motion.p>
             <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-              <a
-                href='/gift-registry'
+              <Link
+                to='/gift-registry'
                 className='inline-block px-8 sm:px-10 py-3 sm:py-4 rounded-full text-sm sm:text-base font-bold shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all duration-300 w-full sm:w-auto text-center'
                 style={{
                   backgroundColor: 'var(--theme-primary)',
@@ -352,7 +394,7 @@ function AppContent() {
                 }}
               >
                 SEND YOUR BLESSINGS →
-              </a>
+              </Link>
             </motion.div>
           </motion.div>
 

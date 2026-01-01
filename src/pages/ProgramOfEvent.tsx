@@ -204,7 +204,7 @@ export function ProgramOfEvent() {
               'hover:text'
             )} transition-colors`}
           >
-            ← Back to Home
+            ← Back Home
           </motion.a>
         </div>
       </motion.div>
