@@ -43,7 +43,7 @@ const slideInRight: Variants = {
 function AppContent() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { scrollYProgress } = useScroll();
-  const { currentColor } = useTheme();
+  useTheme();
 
   const navBg = useTransform(
     scrollYProgress,
@@ -188,7 +188,7 @@ function AppContent() {
               className='absolute inset-0 w-full h-[120%] -top-[10%]'
             >
               <img
-                src='/src/assets/couplec6.png'
+                src='/couplec6.png'
                 alt='Wedding celebration'
                 className='w-full h-full object-cover'
               />
