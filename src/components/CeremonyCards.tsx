@@ -159,14 +159,8 @@ export function CeremonyCards() {
           </motion.div>
 
           {/* CTA Button */}
-          <motion.a
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.6 }}
-            whileHover={{ scale: 1.05, y: -2 }}
-            whileTap={{ scale: 0.98 }}
-            href='/ceremony-details/wedding'
+          <Link
+            to='/ceremony-details'
             className='inline-flex items-center gap-2 px-10 py-4 rounded-full text-base font-semibold border-2 transition-all duration-300 shadow-lg hover:shadow-xl'
             style={{
               borderColor: 'var(--theme-primary)',
@@ -182,21 +176,29 @@ export function CeremonyCards() {
               e.currentTarget.style.color = 'var(--theme-primary)';
             }}
           >
-            View Details
-            <svg
-              className='w-5 h-5'
-              fill='none'
-              stroke='currentColor'
-              viewBox='0 0 24 24'
+            <motion.span
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.6 }}
+              className='flex items-center gap-2'
             >
-              <path
-                strokeLinecap='round'
-                strokeLinejoin='round'
-                strokeWidth={2}
-                d='M17 8l4 4m0 0l-4 4m4-4H3'
-              />
-            </svg>
-          </motion.a>
+              View Details
+              <svg
+                className='w-5 h-5'
+                fill='none'
+                stroke='currentColor'
+                viewBox='0 0 24 24'
+              >
+                <path
+                  strokeLinecap='round'
+                  strokeLinejoin='round'
+                  strokeWidth={2}
+                  d='M17 8l4 4m0 0l-4 4m4-4H3'
+                />
+              </svg>
+            </motion.span>
+          </Link>
         </div>
       </motion.div>
     </div>

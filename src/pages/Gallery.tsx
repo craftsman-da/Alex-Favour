@@ -89,7 +89,7 @@ export function Gallery() {
           >
             <ArrowLeft className='w-3 h-3 sm:w-4 sm:h-4' />
             <span className='hidden sm:inline'> ← Back Home</span>
-            <span className='sm:hidden'>← Back</span>
+            <span className='sm:hidden'>Back</span>
           </motion.a>
         </div>
       </nav>

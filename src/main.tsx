@@ -14,11 +14,11 @@ createRoot(document.getElementById('root')!).render(
     <ThemeProvider>
       <Router>
         <Routes>
-          <Route path="/" element={<App />} />
-          <Route path="/program-of-event" element={<ProgramOfEvent />} />
-          <Route path="/ceremony-details/:type" element={<CeremonyDetails />} />
-          <Route path="/gift-registry" element={<GiftRegistry />} />
-          <Route path="/gallery" element={<Gallery />} />
+          <Route path='/' element={<App />} />
+          <Route path='/program-of-event' element={<ProgramOfEvent />} />
+          <Route path='/ceremony-details' element={<CeremonyDetails />} />
+          <Route path='/gift-registry' element={<GiftRegistry />} />
+          <Route path='/gallery' element={<Gallery />} />
         </Routes>
       </Router>
     </ThemeProvider>
