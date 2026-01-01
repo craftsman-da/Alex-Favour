@@ -237,7 +237,7 @@ function AppContent() {
                 className='absolute inset-0 w-full h-[140%] -top-[20%]'
               >
                 <img
-                  src='/src/assets/couplered6.jpg'
+                  src='/couplered6.jpg'
                   alt='Wedding rings symbolizing eternal love'
                   className='w-full h-full object-cover'
                 />
@@ -390,9 +390,9 @@ function AppContent() {
                 className='grid grid-cols-3 gap-2 sm:gap-3'
               >
                 {[
-                  'src/assets/couplered(3).jpg',
-                  'src/assets/coupley(2).jpg',
-                  'src/assets/couplec(2).jpg',
+                  '/couplered(3).jpg',
+                  '/coupley(2).jpg',
+                  '/couplec(2).jpg',
                 ].map((src, idx) => (
                   <motion.div
                     key={idx}
@@ -611,19 +611,19 @@ function AppContent() {
           >
             {[
               {
-                img: 'src/assets/wellwish.png',
+                img: '/wellwish.png',
                 text: 'What a beautiful celebration of love! The ceremony was heartfelt and the reception was absolutely magical. Wishing you both a lifetime of happiness!',
                 name: 'Pastor kc Eze',
                 title: 'God Father',
               },
               {
-                img: 'src/assets/wellwish.png',
+                img: '/wellwish.png',
                 text: "I've never seen two people more perfect for each other. Your love story inspires us all. Congratulations on this wonderful journey!",
                 name: 'Mr Paul Nguta',
                 title: "Bride's Father",
               },
               {
-                img: 'src/assets/wellwish.png',
+                img: '/wellwish.png',
                 text: 'To witness your love bloom has been such a joy. May your marriage be filled with laughter, adventure, and endless love!',
                 name: 'Chidubem Genexsis',
                 title: 'Childhood Friend',
