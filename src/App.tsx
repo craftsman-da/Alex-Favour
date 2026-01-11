@@ -393,7 +393,7 @@ function AppContent() {
                   e.currentTarget.style.color = 'white';
                 }}
               >
-                SEND YOUR BLESSINGS →
+                SEND YOUR GIFT →
               </Link>
             </motion.div>
           </motion.div>
