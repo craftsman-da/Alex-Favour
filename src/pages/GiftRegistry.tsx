@@ -16,15 +16,15 @@ export function GiftRegistry() {
   const bankDetails = [
     {
       id: 'bank1',
-      bankName: 'Opay',
-      accountNumber: '9032267633',
-      accountName: 'Ugwuoke Ifesinachi Alex',
+      bankName: 'Monie Point',
+      accountNumber: '5974820558',
+      accountName: 'Favour Chioma',
     },
     {
       id: 'bank2',
       bankName: 'Opay',
-      accountNumber: '8142620773',
-      accountName: 'Paul Favour Chioma',
+      accountNumber: '6106134578',
+      accountName: 'Favour Chioma',
     },
   ];
 

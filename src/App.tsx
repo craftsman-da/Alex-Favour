@@ -111,7 +111,7 @@ function AppContent() {
               transition={{ duration: 0.2 }}
             >
               <Link
-                to='/our-story'
+                to='/#story'
                 className='hover:text-gray-900 transition-colors relative group'
               >
                 Our Story

@@ -17,7 +17,7 @@ export function Countdown() {
 
   useEffect(() => {
     // Set your wedding date here (January 17, 2026)
-    const weddingDate = new Date('2026-01-17T00:00:00').getTime();
+    const weddingDate = new Date('2026-01-17T10:00:00+01:00').getTime();
 
     const calculateTimeLeft = () => {
       const now = new Date().getTime();
