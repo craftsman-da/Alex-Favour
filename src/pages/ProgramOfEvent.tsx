@@ -34,8 +34,6 @@ const timelineItem: Variants = {
   },
 };
 
-// Mobile-specific slide variants
-
 export function ProgramOfEvent() {
   const { currentColor } = useTheme();
   const [activeTab, setActiveTab] = useState(0);
@@ -239,7 +237,10 @@ export function ProgramOfEvent() {
             </p>
           </motion.div>
 
-          <motion.div variants={fadeInUp}>
+          <motion.div
+            variants={fadeInUp}
+            className='flex flex-col sm:flex-row gap-4 justify-center'
+          >
             <motion.button
               whileHover={{ scale: 1.05, y: -2 }}
               whileTap={{ scale: 0.95 }}
@@ -248,8 +249,22 @@ export function ProgramOfEvent() {
               style={{ backgroundColor: currentColor.value }}
             >
               <Download className='w-5 h-5' />
-              Download Program PDF
+              Download Program Summary
             </motion.button>
+
+            <motion.a
+              href='/Favourlex_wedding.pdf'
+              download='Favourlex_wedding.pdf'
+              animate={{ scale: [1, 1.05, 1] }}
+              transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
+              whileHover={{ scale: 1.05, y: -2 }}
+              whileTap={{ scale: 0.95 }}
+              className={`inline-flex items-center gap-2 px-6 py-3 rounded-full text-white font-medium shadow-lg ${currentColor.hover} transition-all`}
+              style={{ backgroundColor: currentColor.value }}
+            >
+              <Download className='w-5 h-5' />
+              Download Full Wedding PDF
+            </motion.a>
           </motion.div>
         </motion.div>
       </section>
